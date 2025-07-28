@@ -91,41 +91,39 @@
                     <h3><i class="fas fa-th"></i> {% trans "Mapa de Asientos" %}</h3>
                 </div>
                 <div class="card-body">
-                    <div class="seat-map">
-                        {% regroup asientos by fila as asientos_por_fila %}
-                        {% for fila in asientos_por_fila %}
-                            <div class="seat-row">
-                                <div class="seat-number">{{ fila.grouper }}</div>
-                                {% for asiento in fila.list %}
-                                    {% if asiento.columna == 'C' %}
-                                        <div class="aisle"></div>
-                                    {% endif %}
-                                    <div class="seat {% if asiento.id in asientos_ocupados %}occupied{% else %}available{% endif %}" 
+                    <div class="seat-map d-flex flex-column align-items-center" style="background: #fff; border-radius: 12px; padding: 32px 0;">
+                    {% regroup asientos by fila as asientos_por_fila %}
+                    {% for fila in asientos_por_fila %}
+                        <div class="seat-row d-flex align-items-center mb-2" style="gap: 16px;">
+                            <div class="seat-number" style="width: 32px; font-weight: bold; font-size: 1.2rem; color: #222;">{{ fila.grouper }}</div>
+                            {% for asiento in fila.list %}
+                                <div class="d-inline-block">
+                                    <div class="seat btn btn-sm {% if asiento.id in asientos_ocupados %}btn-danger occupied{% else %}btn-success available{% endif %}"
+                                         style="width: 40px; height: 40px; font-weight: bold; font-size: 1rem; margin: 2px; border-radius: 8px; display: flex; align-items: center; justify-content: center;"
                                          data-seat-id="{{ asiento.id }}"
-                                         data-seat-number="{{ asiento.numero }}"
-                                         data-seat-price="{{ vuelo.precio_base|calculate_seat_price:asiento.tipo|floatformat:0 }}"> {# <-- CAMBIO AQUÍ #}
+                                         data-seat-number="{{ asiento.columna }}"
+                                         data-seat-price="{{ vuelo.precio_base|calculate_seat_price:asiento.tipo|floatformat:0 }}">
                                         {{ asiento.columna }}
                                     </div>
-                                {% endfor %}
-                            </div>
-                        {% endfor %}
-                        
-                        <!-- Legend -->
-                        <div class="legend">
-                            <div class="legend-item">
-                                <div class="seat available"></div>
-                                <span>{% trans "Disponible" %}</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="seat occupied"></div>
-                                <span>{% trans "Ocupado" %}</span>
-                            </div>
-                            <div class="legend-item">
-                                <div class="seat selected"></div>
-                                <span>{% trans "Seleccionado" %}</span>
-                            </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                    <div class="legend d-flex justify-content-center gap-4 mt-4">
+                        <div class="legend-item d-flex align-items-center gap-2">
+                            <div class="seat btn btn-success" style="width: 32px; height: 32px; border-radius: 8px;"></div>
+                            <span>{% trans "Disponible" %}</span>
+                        </div>
+                        <div class="legend-item d-flex align-items-center gap-2">
+                            <div class="seat btn btn-danger" style="width: 32px; height: 32px; border-radius: 8px;"></div>
+                            <span>{% trans "Ocupado" %}</span>
+                        </div>
+                        <div class="legend-item d-flex align-items-center gap-2">
+                            <div class="seat btn btn-warning" style="width: 32px; height: 32px; border-radius: 8px;"></div>
+                            <span>{% trans "Seleccionado" %}</span>
                         </div>
                     </div>
+                </div>
                 </div>
             </div>
         </div>
@@ -188,27 +186,26 @@ document.addEventListener('DOMContentLoaded', function() {
             // Remove previous selection
             if (selectedSeat) {
                 selectedSeat.classList.remove('selected');
+                selectedSeat.classList.remove('btn-warning');
+                selectedSeat.classList.add('btn-success');
             }
-            
             // Select new seat
             this.classList.add('selected');
+            this.classList.remove('btn-success');
+            this.classList.add('btn-warning');
             selectedSeat = this;
-            
             // Update booking summary
             const seatNumber = this.dataset.seatNumber;
             const seatPrice = this.dataset.seatPrice;
             const seatId = this.dataset.seatId;
-            
             selectedSeatSpan.textContent = seatNumber;
             seatPriceSpan.textContent = seatPrice;
             totalPriceSpan.textContent = seatPrice;
-            
             // Update reserve button URL
             if (reserveBtn) {
                 const currentUrl = reserveBtn.href.split('?')[0];
                 reserveBtn.href = currentUrl + '?asiento=' + seatId;
             }
-            
             // Show booking summary
             bookingSummary.style.display = 'block';
             noSeatSelected.style.display = 'none';
