@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load i18n %}
+{% load flight_extras %} {# Asegúrate de que esta línea esté presente #}
 
 {% block title %}{{ vuelo.codigo_vuelo }} - {{ block.super }}{% endblock %}
 
@@ -102,7 +103,7 @@
                                     <div class="seat {% if asiento.id in asientos_ocupados %}occupied{% else %}available{% endif %}" 
                                          data-seat-id="{{ asiento.id }}"
                                          data-seat-number="{{ asiento.numero }}"
-                                         data-seat-price="{% if asiento.tipo == 'primera' %}{{ vuelo.precio_base|floatformat:0|mul:2 }}{% elif asiento.tipo == 'ejecutiva' %}{{ vuelo.precio_base|floatformat:0|mul:1.5 }}{% else %}{{ vuelo.precio_base }}{% endif %}">
+                                         data-seat-price="{{ vuelo.precio_base|calculate_seat_price:asiento.tipo|floatformat:0 }}"> {# <-- CAMBIO AQUÍ #}
                                         {{ asiento.columna }}
                                     </div>
                                 {% endfor %}

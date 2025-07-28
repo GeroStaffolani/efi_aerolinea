@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib import messages
 from django.http import JsonResponse, HttpResponse
 from django.utils.translation import gettext as _
-from django.db.models import Q, Count
+from django.db.models import Q, Count, F
 from django.core.paginator import Paginator
 from .models import Vuelo, Pasajero, Reserva, Asiento, Boleto
 from .forms import PasajeroForm, BuscarVuelosForm, ReservaForm
@@ -56,17 +56,33 @@ def detalle_vuelo(request, vuelo_id):
     vuelo = get_object_or_404(Vuelo, id=vuelo_id)
     asientos_disponibles = vuelo.asientos_disponibles()
     
-    # Obtener layout de asientos
+    # Obtener layout de asientos con precios calculados
     asientos = vuelo.avion.asientos.all().order_by('fila', 'columna')
     asientos_ocupados = Reserva.objects.filter(
         vuelo=vuelo,
         estado__in=['confirmada', 'pendiente']
     ).values_list('asiento_id', flat=True)
     
+    # Calcular precios para cada asiento
+    asientos_con_precio = []
+    for asiento in asientos:
+        precio = vuelo.precio_base
+        if asiento.tipo == 'primera':
+            precio = vuelo.precio_base * 2
+        elif asiento.tipo == 'ejecutiva':
+            precio = vuelo.precio_base * 1.5
+        
+        asientos_con_precio.append({
+            'asiento': asiento,
+            'precio': precio,
+            'ocupado': asiento.id in asientos_ocupados
+        })
+    
     context = {
         'vuelo': vuelo,
         'asientos_disponibles': asientos_disponibles,
         'asientos': asientos,
+        'asientos_con_precio': asientos_con_precio,
         'asientos_ocupados': list(asientos_ocupados),
     }
     return render(request, 'flights/detalle_vuelo.html', context)
@@ -218,12 +234,19 @@ def obtener_asientos_ajax(request, vuelo_id):
     ).values_list('asiento_id', flat=True)
     
     for asiento in vuelo.avion.asientos.all():
+        precio = vuelo.precio_base
+        if asiento.tipo == 'primera':
+            precio = vuelo.precio_base * 2
+        elif asiento.tipo == 'ejecutiva':
+            precio = vuelo.precio_base * 1.5
+            
         asientos.append({
             'id': asiento.id,
             'numero': asiento.numero,
             'fila': asiento.fila,
             'columna': asiento.columna,
             'tipo': asiento.tipo,
+            'precio': float(precio),
             'disponible': asiento.id not in asientos_ocupados
         })
     
