@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Inicio" %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">{% trans "Bienvenido a" %} {{ airline_name }}</h1>
+                <p class="lead mb-4">{{ airline_slogan }}</p>
+                <a href="{% url 'buscar_vuelos' %}" class="btn btn-light btn-lg">
+                    <i class="fas fa-search"></i> {% trans "Buscar Vuelos" %}
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <img src="/placeholder.svg?height=400&width=600" 
+                     alt="{% trans 'Avión volando' %}" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Statistics Section -->
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-plane fa-3x text-primary mb-3"></i>
+                        <h3 class="card-title">{{ total_vuelos }}</h3>
+                        <p class="card-text">{% trans "Vuelos Totales" %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-users fa-3x text-success mb-3"></i>
+                        <h3 class="card-title">{{ total_pasajeros }}</h3>
+                        <p class="card-text">{% trans "Pasajeros Registrados" %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
+                        <h3 class="card-title">{{ total_reservas }}</h3>
+                        <p class="card-text">{% trans "Reservas Realizadas" %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <i class="fas fa-clock fa-3x text-info mb-3"></i>
+                        <h3 class="card-title">{{ total_vuelos_hoy }}</h3>
+                        <p class="card-text">{% trans "Vuelos Hoy" %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Flights -->
+<section class="py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">{% trans "Vuelos Destacados" %}</h2>
+        <div class="row">
+            {% for vuelo in vuelos_destacados %}
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <i class="fas fa-plane-departure text-primary"></i>
+                                {{ vuelo.codigo_vuelo }}
+                            </h5>
+                            <p class="card-text">
+                                <strong>{{ vuelo.origen }}</strong> → <strong>{{ vuelo.destino }}</strong>
+                            </p>
+                            <p class="card-text">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar"></i> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}
+                                </small>
+                            </p>
+                            <p class="card-text">
+                                <span class="badge bg-success">${{ vuelo.precio_base }}</span>
+                                <span class="badge bg-info">{{ vuelo.asientos_disponibles }} {% trans "asientos disponibles" %}</span>
+                            </p>
+                        </div>
+                        <div class="card-footer">
+                            <a href="{% url 'detalle_vuelo' vuelo.id %}" class="btn btn-primary btn-sm">
+                                {% trans "Ver Detalles" %}
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% empty %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">{% trans "No hay vuelos disponibles en este momento." %}</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">{% trans "Nuestros Servicios" %}</h2>
+        <div class="row">
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
+                <h4>{% trans "Seguridad Garantizada" %}</h4>
+                <p>{% trans "Cumplimos con los más altos estándares de seguridad internacional." %}</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-clock fa-3x text-success mb-3"></i>
+                <h4>{% trans "Puntualidad" %}</h4>
+                <p>{% trans "Nos comprometemos con la puntualidad en todos nuestros vuelos." %}</p>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <i class="fas fa-headset fa-3x text-info mb-3"></i>
+                <h4>{% trans "Atención 24/7" %}</h4>
+                <p>{% trans "Nuestro equipo de soporte está disponible las 24 horas del día." %}</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

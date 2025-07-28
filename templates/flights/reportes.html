@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Reportes" %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">
+        <i class="fas fa-chart-bar"></i> {% trans "Reportes del Sistema" %}
+    </h1>
+    
+    <!-- Statistics Cards -->
+    <div class="row mb-5">
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-plane fa-3x text-primary mb-3"></i>
+                    <h3>{{ stats.total_vuelos }}</h3>
+                    <p class="text-muted">{% trans "Total Vuelos" %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-plane-departure fa-3x text-success mb-3"></i>
+                    <h3>{{ stats.vuelos_activos }}</h3>
+                    <p class="text-muted">{% trans "Vuelos Activos" %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-users fa-3x text-info mb-3"></i>
+                    <h3>{{ stats.total_pasajeros }}</h3>
+                    <p class="text-muted">{% trans "Total Pasajeros" %}</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3 mb-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
+                    <h3>{{ stats.total_reservas }}</h3>
+                    <p class="text-muted">{% trans "Total Reservas" %}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Reservation Status -->
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>{% trans "Estado de Reservas" %}</h4>
+                </div>
+                <div class="card-body">
+                    <div class="row text-center">
+                        <div class="col-6">
+                            <h3 class="text-success">{{ stats.reservas_confirmadas }}</h3>
+                            <p>{% trans "Confirmadas" %}</p>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="text-danger">{{ stats.reservas_canceladas }}</h3>
+                            <p>{% trans "Canceladas" %}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h4>{% trans "Tasa de Ocupación" %}</h4>
+                </div>
+                <div class="card-body">
+                    {% if stats.total_reservas > 0 %}
+                        {% widthratio stats.reservas_confirmadas stats.total_reservas 100 as ocupacion %}
+                        <div class="progress mb-3" style="height: 30px;">
+                            <div class="progress-bar bg-success" role="progressbar" 
+                                 style="width: {{ ocupacion }}%">
+                                {{ ocupacion }}%
+                            </div>
+                        </div>
+                        <p class="text-center">{% trans "Reservas confirmadas del total" %}</p>
+                    {% else %}
+                        <p class="text-center text-muted">{% trans "No hay datos disponibles" %}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Popular Flights -->
+    <div class="card">
+        <div class="card-header">
+            <h4>{% trans "Vuelos Más Populares" %}</h4>
+        </div>
+        <div class="card-body">
+            {% if vuelos_populares %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Código" %}</th>
+                                <th>{% trans "Ruta" %}</th>
+                                <th>{% trans "Fecha" %}</th>
+                                <th>{% trans "Reservas" %}</th>
+                                <th>{% trans "Acciones" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for vuelo in vuelos_populares %}
+                                <tr>
+                                    <td><span class="badge bg-primary">{{ vuelo.codigo_vuelo }}</span></td>
+                                    <td>{{ vuelo.origen }} → {{ vuelo.destino }}</td>
+                                    <td>{{ vuelo.fecha_salida|date:"d/m/Y H:i" }}</td>
+                                    <td>
+                                        <span class="badge bg-success">{{ vuelo.num_reservas }}</span>
+                                    </td>
+                                    <td>
+                                        <a href="{% url 'reporte_pasajeros_vuelo' vuelo.id %}" 
+                                           class="btn btn-sm btn-outline-primary">
+                                            <i class="fas fa-users"></i> {% trans "Ver Pasajeros" %}
+                                        </a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">{% trans "No hay datos de vuelos disponibles" %}</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

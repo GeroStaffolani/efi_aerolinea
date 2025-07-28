@@ -1,0 +1,143 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Reserva" %} {{ reserva.codigo_reserva }} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="text-center mb-4">
+                <i class="fas fa-check-circle fa-4x text-success mb-3"></i>
+                <h1 class="text-success">{% trans "¡Reserva Confirmada!" %}</h1>
+                <p class="lead">{% trans "Tu reserva ha sido procesada exitosamente" %}</p>
+            </div>
+            
+            <!-- Reservation Details -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>{% trans "Detalles de la Reserva" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h5>{% trans "Información de la Reserva" %}</h5>
+                            <p><strong>{% trans "Código de Reserva:" %}</strong> 
+                                <span class="badge bg-primary fs-6">{{ reserva.codigo_reserva }}</span>
+                            </p>
+                            <p><strong>{% trans "Estado:" %}</strong> 
+                                <span class="badge bg-success">{{ reserva.get_estado_display }}</span>
+                            </p>
+                            <p><strong>{% trans "Fecha de Reserva:" %}</strong> {{ reserva.fecha_reserva|date:"d/m/Y H:i" }}</p>
+                            <p><strong>{% trans "Precio Total:" %}</strong> 
+                                <span class="h4 text-primary">${{ reserva.precio }}</span>
+                            </p>
+                        </div>
+                        <div class="col-md-6">
+                            <h5>{% trans "Información del Pasajero" %}</h5>
+                            <p><strong>{% trans "Nombre:" %}</strong> {{ reserva.pasajero.nombre }}</p>
+                            <p><strong>{% trans "Documento:" %}</strong> {{ reserva.pasajero.get_tipo_documento_display }} {{ reserva.pasajero.documento }}</p>
+                            <p><strong>{% trans "Email:" %}</strong> {{ reserva.pasajero.email }}</p>
+                            <p><strong>{% trans "Teléfono:" %}</strong> {{ reserva.pasajero.telefono }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Flight Details -->
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>{% trans "Detalles del Vuelo" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p><strong>{% trans "Vuelo:" %}</strong> {{ reserva.vuelo.codigo_vuelo }}</p>
+                            <p><strong>{% trans "Origen:" %}</strong> {{ reserva.vuelo.origen }}</p>
+                            <p><strong>{% trans "Destino:" %}</strong> {{ reserva.vuelo.destino }}</p>
+                            <p><strong>{% trans "Fecha de Salida:" %}</strong> {{ reserva.vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
+                            <p><strong>{% trans "Fecha de Llegada:" %}</strong> {{ reserva.vuelo.fecha_llegada|date:"d/m/Y H:i" }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>{% trans "Avión:" %}</strong> {{ reserva.vuelo.avion.modelo }}</p>
+                            <p><strong>{% trans "Asiento:" %}</strong> 
+                                <span class="badge bg-info fs-6">{{ reserva.asiento.numero }}</span>
+                            </p>
+                            <p><strong>{% trans "Tipo de Asiento:" %}</strong> {{ reserva.asiento.get_tipo_display }}</p>
+                            <p><strong>{% trans "Duración:" %}</strong> {{ reserva.vuelo.duracion }}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Boarding Pass -->
+            {% if reserva.boleto %}
+            <div class="card mb-4">
+                <div class="card-header">
+                    <h3>{% trans "Pase de Abordar" %}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="boarding-pass">
+                        <div class="row">
+                            <div class="col-md-8">
+                                <h4>{{ reserva.vuelo.codigo_vuelo }}</h4>
+                                <p class="mb-1"><strong>{{ reserva.pasajero.nombre }}</strong></p>
+                                <p class="mb-1">{{ reserva.vuelo.origen }} → {{ reserva.vuelo.destino }}</p>
+                                <p class="mb-1">{{ reserva.vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
+                                <p class="mb-1">{% trans "Asiento:" %} {{ reserva.asiento.numero }}</p>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <div class="qr-code">
+                                    <i class="fas fa-qrcode fa-4x"></i>
+                                    <p class="small mt-2">{{ reserva.boleto.codigo_barra }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            
+            <!-- Actions -->
+            <div class="text-center">
+                <a href="{% url 'mis_reservas' %}" class="btn btn-primary btn-lg">
+                    <i class="fas fa-list"></i> {% trans "Ver Mis Reservas" %}
+                </a>
+                <a href="{% url 'home' %}" class="btn btn-secondary btn-lg ms-2">
+                    <i class="fas fa-home"></i> {% trans "Volver al Inicio" %}
+                </a>
+                <button onclick="window.print()" class="btn btn-outline-primary btn-lg ms-2">
+                    <i class="fas fa-print"></i> {% trans "Imprimir" %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+    .boarding-pass {
+        border: 2px dashed #007bff;
+        border-radius: 10px;
+        padding: 20px;
+        background: linear-gradient(45deg, #f8f9fa 25%, transparent 25%), 
+                    linear-gradient(-45deg, #f8f9fa 25%, transparent 25%), 
+                    linear-gradient(45deg, transparent 75%, #f8f9fa 75%), 
+                    linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+    
+    .qr-code {
+        text-align: center;
+    }
+    
+    @media print {
+        .btn, .navbar, .footer {
+            display: none !important;
+        }
+    }
+</style>
+{% endblock %}

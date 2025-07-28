@@ -1,0 +1,68 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Django related
+*.log
+*.pot
+*.pyc
+local_settings.py
+
+# Environment
+.env
+.venv/
+venv/
+ENV/
+env.bak/
+env/
+
+# VSCode & JetBrains (PyCharm) configs
+.vscode/
+.idea/
+
+# Static & media files (if generated or collected)
+staticfiles/
+static/
+media/
+
+# Migrations (opcional: puedes eliminarlas si deseas versionarlas)
+**/migrations/
+!*/migrations/__init__.py
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Coverage and testing
+.coverage
+htmlcov/
+.tox/
+.nox/
+pytest_cache/
+coverage.xml
+
+# Translations cache
+*.mo
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# MyPy, Pylint, and otros análisis
+.mypy_cache/
+.pytest_cache/
+.pyre/
+.dmypy.json
+.cache/
+
+# Documentación
+docs/_build/
+
+# Jupyter Notebooks (por si usas alguno)
+.ipynb_checkpoints/
+
+# Compiled UI translation files
+locale/**/LC_MESSAGES/*.mo
