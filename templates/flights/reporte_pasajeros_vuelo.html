@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Pasajeros del Vuelo" %} - {{ block.super }}{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h1 class="text-center mb-5">
+        <i class="fas fa-users"></i> {% trans "Pasajeros del Vuelo" %}
+    </h1>
+    <div class="card mb-4">
+        <div class="card-header">
+            <h4>{% trans "Vuelo" %}: {{ vuelo.codigo_vuelo }} | {{ vuelo.origen }} → {{ vuelo.destino }}</h4>
+            <p><strong>{% trans "Fecha" %}:</strong> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
+        </div>
+        <div class="card-body">
+            {% if pasajeros %}
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Nombre" %}</th>
+                                <th>{% trans "Documento" %}</th>
+                                <th>{% trans "Email" %}</th>
+                                <th>{% trans "Teléfono" %}</th>
+                                <th>{% trans "Asiento" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pasajero in pasajeros %}
+                                <tr>
+                                    <td>{{ pasajero.nombre }}</td>
+                                    <td>{{ pasajero.documento }}</td>
+                                    <td>{{ pasajero.email }}</td>
+                                    <td>{{ pasajero.telefono }}</td>
+                                    <td>{{ pasajero.asiento }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% else %}
+                <p class="text-center text-muted">{% trans "No hay pasajeros para este vuelo." %}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="text-center">
+        <a href="{% url 'reportes' %}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left"></i> {% trans "Volver a Reportes" %}
+        </a>
+    </div>
+</div>
+{% endblock %}
