@@ -9,17 +9,6 @@
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-lg-6">
-                <h1 class="display-4 fw-bold mb-4">{% trans "Bienvenido a" %} {{ airline_name }}</h1>
-                <p class="lead mb-4">{{ airline_slogan }}</p>
-                <a href="{% url 'buscar_vuelos' %}" class="btn btn-light btn-lg">
-                    <i class="fas fa-search"></i> {% trans "Buscar Vuelos" %}
-                </a>
-            </div>
-            <div class="col-lg-6">
-                <img src="/placeholder.svg?height=400&width=600" 
-                     alt="{% trans 'Avión volando' %}" class="img-fluid rounded">
-            </div>
         </div>
     </div>
 </section>
