@@ -5,47 +5,38 @@
 {% block title %}{% trans "Reportes" %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <h1 class="text-center mb-5">
+<div class="container airline-section">
+    <h1 class="airline-title airline-gradient-text mb-5">
         <i class="fas fa-chart-bar"></i> {% trans "Reportes del Sistema" %}
     </h1>
-    
     <!-- Statistics Cards -->
     <div class="row mb-5">
         <div class="col-md-3 mb-4">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-plane fa-3x text-primary mb-3"></i>
-                    <h3>{{ stats.total_vuelos }}</h3>
-                    <p class="text-muted">{% trans "Total Vuelos" %}</p>
-                </div>
+            <div class="airline-stat-mosaic text-center p-4">
+                <i class="fas fa-plane fa-3x airline-icon mb-3"></i>
+                <div class="airline-value">{{ stats.total_vuelos }}</div>
+                <div class="airline-label">{% trans "Total Vuelos" %}</div>
             </div>
         </div>
         <div class="col-md-3 mb-4">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-plane-departure fa-3x text-success mb-3"></i>
-                    <h3>{{ stats.vuelos_activos }}</h3>
-                    <p class="text-muted">{% trans "Vuelos Activos" %}</p>
-                </div>
+            <div class="airline-stat-mosaic text-center p-4">
+                <i class="fas fa-plane-departure fa-3x airline-icon mb-3"></i>
+                <div class="airline-value">{{ stats.vuelos_activos }}</div>
+                <div class="airline-label">{% trans "Vuelos Activos" %}</div>
             </div>
         </div>
         <div class="col-md-3 mb-4">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-users fa-3x text-info mb-3"></i>
-                    <h3>{{ stats.total_pasajeros }}</h3>
-                    <p class="text-muted">{% trans "Total Pasajeros" %}</p>
-                </div>
+            <div class="airline-stat-mosaic text-center p-4">
+                <i class="fas fa-users fa-3x airline-icon mb-3"></i>
+                <div class="airline-value">{{ stats.total_pasajeros }}</div>
+                <div class="airline-label">{% trans "Total Pasajeros" %}</div>
             </div>
         </div>
         <div class="col-md-3 mb-4">
-            <div class="card text-center">
-                <div class="card-body">
-                    <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
-                    <h3>{{ stats.total_reservas }}</h3>
-                    <p class="text-muted">{% trans "Total Reservas" %}</p>
-                </div>
+            <div class="airline-stat-mosaic text-center p-4">
+                <i class="fas fa-ticket-alt fa-3x airline-icon mb-3"></i>
+                <div class="airline-value">{{ stats.total_reservas }}</div>
+                <div class="airline-label">{% trans "Total Reservas" %}</div>
             </div>
         </div>
     </div>

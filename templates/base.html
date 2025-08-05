@@ -14,6 +14,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;400&display=swap" rel="stylesheet">
 
+    <!-- Estilos globales AeroSystem para front profesional -->
     <style>
         :root {
             --primary-color: #1a2980;
@@ -127,6 +128,114 @@
             90%  { left: 100%; opacity: 0.7; }
             100% { left: 110%; opacity: 0; }
         }
+        /* Banner, gradientes y cards */
+        .airline-banner-vertical {
+            background: #1a2980;
+            border-radius: 32px;
+            box-shadow: 0 8px 32px #26d0ce44;
+            position: relative;
+            overflow: hidden;
+        }
+        .airline-banner-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            opacity: 0.25;
+            z-index: 1;
+        }
+        .airline-gradient-text {
+            background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-weight: bold;
+            box-shadow: 0 2px 12px #26d0ce44;
+            transition: background 0.2s, color 0.2s, transform 0.2s;
+        }
+        .btn-gradient:hover {
+            background: #fff;
+            color: #26d0ce;
+            transform: scale(1.08);
+        }
+        /* Cards y mosaicos */
+        .airline-stat-mosaic, .flight-card-vertical, .service-card-alt, .airline-card, .airline-box {
+            background: #fff;
+            border-radius: 24px;
+            color: #1a2980;
+            box-shadow: 0 4px 24px #26d0ce44;
+            border: 2px solid #26d0ce;
+            transition: transform 0.2s, box-shadow 0.2s;
+            min-height: 140px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .airline-stat-mosaic:hover, .flight-card-vertical:hover, .service-card-alt:hover, .airline-card:hover, .airline-box:hover {
+            transform: scale(1.06);
+            box-shadow: 0 8px 32px #26d0ce88;
+        }
+        .airline-icon, .service-icon {
+            color: #26d0ce;
+            text-shadow: 0 0 8px #1a2980;
+            background: #f4f8fb;
+            border-radius: 50%;
+            padding: 18px;
+            box-shadow: 0 0 16px #26d0ce44;
+            display: inline-block;
+            margin-bottom: 8px;
+        }
+        .airline-value {
+            font-size: 2.2rem;
+            font-weight: bold;
+            color: #1a2980;
+        }
+        .airline-label {
+            font-size: 1rem;
+            color: #1a2980;
+        }
+        .flight-info {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .flight-city {
+            color: #1a2980;
+            background: #26d0ce22;
+            padding: 4px 12px;
+            border-radius: 12px;
+            margin: 0 4px;
+        }
+        .flight-arrow {
+            color: #26d0ce;
+            margin: 0 8px;
+        }
+        .flight-date {
+            font-size: 0.95rem;
+            color: #1a2980;
+        }
+        .flight-details {
+            margin-bottom: 8px;
+        }
+        .service-card-alt.bg-gradient {
+            background: linear-gradient(120deg, #1a2980 0%, #26d0ce 100%);
+            color: #fff;
+            border: 2px solid #1a2980;
+        }
+        /* Layout general */
+        .airline-section {
+            padding: 2.5rem 0;
+        }
+        .airline-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.2rem;
+            font-weight: bold;
+        }
     </style>
     
     {% block extra_css %}{% endblock %}
@@ -175,7 +284,7 @@
                                 <li>
                                     <form action="{% url 'set_language' %}" method="post" class="d-inline">
                                         {% csrf_token %}
-                                        <input name="next" type="hidden" value="{{ redirect_to }}">
+                                        <input name="next" type="hidden" value="{{ request.path }}">
                                         <input name="language" type="hidden" value="{{ lang_code }}">
                                         <button type="submit" class="dropdown-item">{{ lang_name }}</button>
                                     </form>
@@ -183,6 +292,16 @@
                             {% endfor %}
                         </ul>
                     </li>
+                    <form action="{% url 'set_language' %}" method="post" class="d-inline-block ms-3 align-middle">
+                        {% csrf_token %}
+                        <select name="language" onchange="this.form.submit()" class="form-select form-select-sm d-inline-block w-auto">
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for lang in LANGUAGES %}
+                                <option value="{{ lang.0 }}" {% if lang.0 == LANGUAGE_CODE %}selected{% endif %}>{{ lang.1 }}</option>
+                            {% endfor %}
+                        </select>
+                    </form>
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">

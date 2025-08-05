@@ -5,88 +5,85 @@
 {% block title %}{% trans "Inicio" %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-<!-- Hero Section -->
-<section class="hero-section">
-    <div class="container">
-        <div class="row align-items-center">
-        </div>
-    </div>
-</section>
-
-<!-- Statistics Section -->
-<section class="py-5">
-    <div class="container">
-        <div class="row text-center">
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-plane fa-3x text-primary mb-3"></i>
-                        <h3 class="card-title">{{ total_vuelos }}</h3>
-                        <p class="card-text">{% trans "Vuelos Totales" %}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-users fa-3x text-success mb-3"></i>
-                        <h3 class="card-title">{{ total_pasajeros }}</h3>
-                        <p class="card-text">{% trans "Pasajeros Registrados" %}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-ticket-alt fa-3x text-warning mb-3"></i>
-                        <h3 class="card-title">{{ total_reservas }}</h3>
-                        <p class="card-text">{% trans "Reservas Realizadas" %}</p>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-3 mb-4">
-                <div class="card h-100">
-                    <div class="card-body">
-                        <i class="fas fa-clock fa-3x text-info mb-3"></i>
-                        <h3 class="card-title">{{ total_vuelos_hoy }}</h3>
-                        <p class="card-text">{% trans "Vuelos Hoy" %}</p>
-                    </div>
-                </div>
+<!-- Banner principal con imagen y CTA, ahora vertical y con overlay -->
+<section class="airline-banner-vertical py-5 mb-5 position-relative">
+    <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80" alt="Playa paradisíaca" class="airline-banner-bg" style="border-radius:0; filter:none;">
+    <div class="airline-banner-overlay" style="background: linear-gradient(120deg, #00000033 0%, #ffffff00 100%); position:absolute; top:0; left:0; width:100%; height:100%; z-index:2;"></div>
+    <div class="container position-relative z-3">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+                <h1 class="display-4 fw-bold mb-3" style="color:#000000; text-shadow: 2px 2px 12px #fff8e1;">{% trans "Descubre el mundo con AeroSystem" %}</h1>
+                <p class="lead mb-4">{% trans "Vuelos directos, seguros y cómodos a los mejores destinos." %}</p>
+                <a href="{% url 'buscar_vuelos' %}" class="btn btn-lg btn-gradient">{% trans "Buscar Vuelos" %}</a>
             </div>
         </div>
     </div>
 </section>
 
-<!-- Featured Flights -->
+<!-- Estadísticas en grid tipo mosaico -->
+<section class="py-3 mb-5">
+    <div class="container">
+        <div class="row g-4 justify-content-center">
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="airline-stat-mosaic shadow-lg d-flex flex-column align-items-center justify-content-center p-4">
+                    <div class="airline-icon mb-2"><i class="fas fa-plane fa-2x"></i></div>
+                    <div class="airline-value">{{ total_vuelos }}</div>
+                    <div class="airline-label">{% trans "Vuelos Totales" %}</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="airline-stat-mosaic shadow-lg d-flex flex-column align-items-center justify-content-center p-4">
+                    <div class="airline-icon mb-2"><i class="fas fa-users fa-2x"></i></div>
+                    <div class="airline-value">{{ total_pasajeros }}</div>
+                    <div class="airline-label">{% trans "Pasajeros" %}</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="airline-stat-mosaic shadow-lg d-flex flex-column align-items-center justify-content-center p-4">
+                    <div class="airline-icon mb-2"><i class="fas fa-ticket-alt fa-2x"></i></div>
+                    <div class="airline-value">{{ total_reservas }}</div>
+                    <div class="airline-label">{% trans "Reservas" %}</div>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3">
+                <div class="airline-stat-mosaic shadow-lg d-flex flex-column align-items-center justify-content-center p-4">
+                    <div class="airline-icon mb-2"><i class="fas fa-clock fa-2x"></i></div>
+                    <div class="airline-value">{{ total_vuelos_hoy }}</div>
+                    <div class="airline-label">{% trans "Vuelos Hoy" %}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Vuelos Destacados en cards apiladas verticalmente -->
 <section class="py-5 bg-light">
     <div class="container">
-        <h2 class="text-center mb-5">{% trans "Vuelos Destacados" %}</h2>
-        <div class="row">
+        <h2 class="text-center mb-5 airline-gradient-text">{% trans "Vuelos Destacados" %}</h2>
+        <div class="row g-4 justify-content-center">
             {% for vuelo in vuelos_destacados %}
-                <div class="col-md-4 mb-4">
-                    <div class="card h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">
-                                <i class="fas fa-plane-departure text-primary"></i>
-                                {{ vuelo.codigo_vuelo }}
-                            </h5>
-                            <p class="card-text">
-                                <strong>{{ vuelo.origen }}</strong> → <strong>{{ vuelo.destino }}</strong>
-                            </p>
-                            <p class="card-text">
-                                <small class="text-muted">
-                                    <i class="fas fa-calendar"></i> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}
-                                </small>
-                            </p>
-                            <p class="card-text">
+                <div class="col-12 col-md-8">
+                    <div class="flight-card-vertical shadow h-100 p-4 d-flex flex-column flex-md-row align-items-center">
+                        <div class="me-md-4 mb-3 mb-md-0 text-center">
+                            <i class="fas fa-plane-departure fa-3x airline-gradient-text"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <h5 class="mb-2">{{ vuelo.codigo_vuelo }}</h5>
+                            <div class="flight-info mb-2">
+                                <span class="flight-city">{{ vuelo.origen }}</span>
+                                <span class="flight-arrow"><i class="fas fa-arrow-right"></i></span>
+                                <span class="flight-city">{{ vuelo.destino }}</span>
+                            </div>
+                            <div class="flight-date mb-2">
+                                <i class="fas fa-calendar"></i> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}
+                            </div>
+                            <div class="flight-details mb-2">
                                 <span class="badge bg-success">${{ vuelo.precio_base }}</span>
                                 <span class="badge bg-info">{{ vuelo.asientos_disponibles }} {% trans "asientos disponibles" %}</span>
-                            </p>
+                            </div>
                         </div>
-                        <div class="card-footer">
-                            <a href="{% url 'detalle_vuelo' vuelo.id %}" class="btn btn-primary btn-sm">
-                                {% trans "Ver Detalles" %}
-                            </a>
+                        <div class="ms-md-4 mt-3 mt-md-0">
+                            <a href="{% url 'detalle_vuelo' vuelo.id %}" class="btn btn-gradient">{% trans "Ver Detalles" %}</a>
                         </div>
                     </div>
                 </div>
@@ -99,27 +96,169 @@
     </div>
 </section>
 
-<!-- Services Section -->
-<section class="py-5">
+<!-- Servicios en boxes alternadas -->
+<section class="py-5" style="background:#f4f8fb;">
     <div class="container">
-        <h2 class="text-center mb-5">{% trans "Nuestros Servicios" %}</h2>
-        <div class="row">
-            <div class="col-md-4 text-center mb-4">
-                <i class="fas fa-shield-alt fa-3x text-primary mb-3"></i>
-                <h4>{% trans "Seguridad Garantizada" %}</h4>
-                <p>{% trans "Cumplimos con los más altos estándares de seguridad internacional." %}</p>
+        <h2 class="text-center mb-5 airline-gradient-text">{% trans "Nuestros Servicios" %}</h2>
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4">
+                <div class="service-card-alt text-center p-4">
+                    <div class="service-icon mb-3"><i class="fas fa-shield-alt fa-3x"></i></div>
+                    <h4 class="airline-gradient-text">{% trans "Seguridad Garantizada" %}</h4>
+                    <p>{% trans "Cumplimos con los más altos estándares de seguridad internacional." %}</p>
+                </div>
             </div>
-            <div class="col-md-4 text-center mb-4">
-                <i class="fas fa-clock fa-3x text-success mb-3"></i>
-                <h4>{% trans "Puntualidad" %}</h4>
-                <p>{% trans "Nos comprometemos con la puntualidad en todos nuestros vuelos." %}</p>
+            <div class="col-md-4">
+                <div class="service-card-alt text-center p-4 bg-gradient">
+                    <div class="service-icon mb-3"><i class="fas fa-clock fa-3x"></i></div>
+                    <h4 class="airline-gradient-text">{% trans "Puntualidad" %}</h4>
+                    <p>{% trans "Nos comprometemos con la puntualidad en todos nuestros vuelos." %}</p>
+                </div>
             </div>
-            <div class="col-md-4 text-center mb-4">
-                <i class="fas fa-headset fa-3x text-info mb-3"></i>
-                <h4>{% trans "Atención 24/7" %}</h4>
-                <p>{% trans "Nuestro equipo de soporte está disponible las 24 horas del día." %}</p>
+            <div class="col-md-4">
+                <div class="service-card-alt text-center p-4">
+                    <div class="service-icon mb-3"><i class="fas fa-headset fa-3x"></i></div>
+                    <h4 class="airline-gradient-text">{% trans "Atención 24/7" %}</h4>
+                    <p>{% trans "Nuestro equipo de soporte está disponible las 24 horas del día." %}</p>
+                </div>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Estilos personalizados para los nuevos layouts -->
+<style>
+.airline-banner-vertical {
+    background: none;
+    border-radius: 0;
+    box-shadow: none;
+    position: relative;
+    overflow: hidden;
+}
+.airline-banner-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+    opacity: 1;
+    z-index: 1;
+    border-radius: 0;
+    filter: none;
+}
+.airline-banner-overlay {
+    /* Overlay muy suave, sin azul */
+    pointer-events: none;
+}
+.airline-banner-vertical .container { position: relative; z-index: 3; }
+.airline-gradient-text {
+    background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+.btn-gradient {
+    background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+    color: #fff;
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    box-shadow: 0 2px 12px #26d0ce44;
+    transition: background 0.2s, color 0.2s, transform 0.2s;
+}
+.btn-gradient:hover {
+    background: #fff;
+    color: #26d0ce;
+    transform: scale(1.08);
+}
+.airline-stat-mosaic {
+    background: #fff;
+    border-radius: 24px;
+    color: #1a2980;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px #26d0ce44;
+    border: 2px solid #26d0ce;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.airline-stat-mosaic:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 32px #26d0ce88;
+}
+.airline-icon {
+    color: #26d0ce;
+    text-shadow: 0 0 8px #1a2980;
+}
+.airline-value {
+    font-size: 2.2rem;
+    font-weight: bold;
+    color: #1a2980;
+}
+.airline-label {
+    font-size: 1rem;
+    color: #1a2980;
+}
+.flight-card-vertical {
+    background: #fff;
+    border-radius: 32px;
+    color: #1a2980;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 24px #26d0ce44;
+    border-left: 8px solid #26d0ce;
+    position: relative;
+    overflow: hidden;
+    min-height: 140px;
+}
+.flight-card-vertical:hover {
+    transform: scale(1.04);
+    box-shadow: 0 8px 32px #26d0ce88;
+}
+.flight-info {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+.flight-city {
+    color: #1a2980;
+    background: #26d0ce22;
+    padding: 4px 12px;
+    border-radius: 12px;
+    margin: 0 4px;
+}
+.flight-arrow {
+    color: #26d0ce;
+    margin: 0 8px;
+}
+.flight-date {
+    font-size: 0.95rem;
+    color: #1a2980;
+}
+.flight-details {
+    margin-bottom: 8px;
+}
+.service-card-alt {
+    background: #fff;
+    border-radius: 24px;
+    color: #1a2980;
+    box-shadow: 0 4px 24px #26d0ce44;
+    transition: transform 0.2s, box-shadow 0.2s;
+    border: 2px solid #26d0ce;
+}
+.service-card-alt.bg-gradient {
+    background: linear-gradient(120deg, #1a2980 0%, #26d0ce 100%);
+    color: #fff;
+    border: 2px solid #1a2980;
+}
+.service-card-alt:hover {
+    transform: scale(1.06);
+    box-shadow: 0 8px 32px #26d0ce88;
+}
+.service-icon {
+    color: #26d0ce;
+    background: #f4f8fb;
+    border-radius: 50%;
+    padding: 18px;
+    box-shadow: 0 0 16px #26d0ce44;
+    display: inline-block;
+}
+</style>
 {% endblock %}

@@ -5,50 +5,48 @@
 {% block title %}{% trans "Buscar Vuelos" %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="container py-5">
-    <div class="row">
-        <div class="col-lg-8 mx-auto">
-            
+<div class="container airline-section">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <h1 class="airline-title airline-gradient-text mb-5">
+                <i class="fas fa-search"></i> {% trans "Buscar Vuelos" %}
+            </h1>
             <!-- Search Form -->
-            <div class="card mb-5">
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.origen.id_for_label }}" class="form-label">
-                                    <i class="fas fa-plane-departure"></i> {% trans "Origen" %}
-                                </label>
-                                {{ form.origen }}
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.destino.id_for_label }}" class="form-label">
-                                    <i class="fas fa-plane-arrival"></i> {% trans "Destino" %}
-                                </label>
-                                {{ form.destino }}
-                            </div>
+            <div class="airline-card mb-5 p-4">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.origen.id_for_label }}" class="form-label">
+                                <i class="fas fa-plane-departure"></i> {% trans "Origen" %}
+                            </label>
+                            {{ form.origen }}
                         </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.fecha_salida.id_for_label }}" class="form-label">
-                                    <i class="fas fa-calendar"></i> {% trans "Fecha de Salida" %}
-                                </label>
-                                {{ form.fecha_salida }}
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ form.pasajeros.id_for_label }}" class="form-label">
-                                    <i class="fas fa-users"></i> {% trans "Pasajeros" %}
-                                </label>
-                                {{ form.pasajeros }}
-                            </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.destino.id_for_label }}" class="form-label">
+                                <i class="fas fa-plane-arrival"></i> {% trans "Destino" %}
+                            </label>
+                            {{ form.destino }}
                         </div>
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-search"></i> {% trans "Buscar Vuelos" %}
-                            </button>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.fecha_salida.id_for_label }}" class="form-label">
+                                <i class="fas fa-calendar"></i> {% trans "Fecha de Salida" %}
+                            </label>
+                            {{ form.fecha_salida }}
                         </div>
-                    </form>
-                </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ form.pasajeros.id_for_label }}" class="form-label">
+                                <i class="fas fa-users"></i> {% trans "Pasajeros" %}
+                            </label>
+                            {{ form.pasajeros }}
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-gradient w-100 mt-3">
+                        <i class="fas fa-search"></i> {% trans "Buscar" %}
+                    </button>
+                </form>
             </div>
             
             <!-- Search Results -->

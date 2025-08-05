@@ -5,128 +5,115 @@
 {% block title %}{% trans "Crear Reserva" %} - {{ block.super }}{% endblock %}
 
 {% block content %}
-<div class="container py-5">
+<div class="container airline-section">
     <div class="row justify-content-center">
         <div class="col-lg-8">
-            <h1 class="text-center mb-5">
+            <h1 class="airline-title airline-gradient-text mb-5">
                 <i class="fas fa-ticket-alt"></i> {% trans "Crear Reserva" %}
             </h1>
             
             <!-- Flight Summary -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h4>{% trans "Resumen del Vuelo" %}</h4>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>{% trans "Vuelo:" %}</strong> {{ vuelo.codigo_vuelo }}</p>
-                            <p><strong>{% trans "Ruta:" %}</strong> {{ vuelo.origen }} → {{ vuelo.destino }}</p>
-                            <p><strong>{% trans "Fecha:" %}</strong> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>{% trans "Avión:" %}</strong> {{ vuelo.avion.modelo }}</p>
-                            <p><strong>{% trans "Duración:" %}</strong> {{ vuelo.duracion }}</p>
-                            <p><strong>{% trans "Precio Base:" %}</strong> ${{ vuelo.precio_base }}</p>
-                        </div>
+            <div class="airline-card mb-4 p-4">
+                <h4 class="airline-gradient-text mb-3">{% trans "Resumen del Vuelo" %}</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>{% trans "Vuelo:" %}</strong> {{ vuelo.codigo_vuelo }}</p>
+                        <p><strong>{% trans "Ruta:" %}</strong> {{ vuelo.origen }} → {{ vuelo.destino }}</p>
+                        <p><strong>{% trans "Fecha:" %}</strong> {{ vuelo.fecha_salida|date:"d/m/Y H:i" }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>{% trans "Avión:" %}</strong> {{ vuelo.avion.modelo }}</p>
+                        <p><strong>{% trans "Duración:" %}</strong> {{ vuelo.duracion }}</p>
+                        <p><strong>{% trans "Precio Base:" %}</strong> ${{ vuelo.precio_base }}</p>
                     </div>
                 </div>
             </div>
             
             <!-- Reservation Form -->
-            <div class="card">
-                <div class="card-header">
-                    <h4>{% trans "Información del Pasajero" %}</h4>
-                </div>
-                <div class="card-body">
-                    <form method="post">
-                        {% csrf_token %}
-                        
-                        <!-- Passenger Information -->
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ pasajero_form.nombre.id_for_label }}" class="form-label">
-                                    {% trans "Nombre Completo" %} *
-                                </label>
-                                {{ pasajero_form.nombre }}
-                                {% if pasajero_form.nombre.errors %}
-                                    <div class="text-danger">{{ pasajero_form.nombre.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ pasajero_form.documento.id_for_label }}" class="form-label">
-                                    {% trans "Documento" %} *
-                                </label>
-                                {{ pasajero_form.documento }}
-                                {% if pasajero_form.documento.errors %}
-                                    <div class="text-danger">{{ pasajero_form.documento.errors }}</div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ pasajero_form.tipo_documento.id_for_label }}" class="form-label">
-                                    {% trans "Tipo de Documento" %} *
-                                </label>
-                                {{ pasajero_form.tipo_documento }}
-                                {% if pasajero_form.tipo_documento.errors %}
-                                    <div class="text-danger">{{ pasajero_form.tipo_documento.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ pasajero_form.email.id_for_label }}" class="form-label">
-                                    {% trans "Email" %} *
-                                </label>
-                                {{ pasajero_form.email }}
-                                {% if pasajero_form.email.errors %}
-                                    <div class="text-danger">{{ pasajero_form.email.errors }}</div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ pasajero_form.telefono.id_for_label }}" class="form-label">
-                                    {% trans "Teléfono" %} *
-                                </label>
-                                {{ pasajero_form.telefono }}
-                                {% if pasajero_form.telefono.errors %}
-                                    <div class="text-danger">{{ pasajero_form.telefono.errors }}</div>
-                                {% endif %}
-                            </div>
-                            <div class="col-md-6 mb-3">
-                                <label for="{{ pasajero_form.fecha_nacimiento.id_for_label }}" class="form-label">
-                                    {% trans "Fecha de Nacimiento" %} *
-                                </label>
-                                {{ pasajero_form.fecha_nacimiento }}
-                                {% if pasajero_form.fecha_nacimiento.errors %}
-                                    <div class="text-danger">{{ pasajero_form.fecha_nacimiento.errors }}</div>
-                                {% endif %}
-                            </div>
-                        </div>
-                        
-                        <!-- Seat Selection -->
-                        <div class="mb-3">
-                            <label for="{{ reserva_form.asiento.id_for_label }}" class="form-label">
-                                {% trans "Seleccionar Asiento" %} *
+            <div class="airline-card p-4">
+                <h4 class="airline-gradient-text mb-3">{% trans "Información del Pasajero" %}</h4>
+                <form method="post">
+                    {% csrf_token %}
+                    
+                    <!-- Passenger Information -->
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ pasajero_form.nombre.id_for_label }}" class="form-label">
+                                {% trans "Nombre Completo" %} *
                             </label>
-                            {{ reserva_form.asiento }}
-                            {% if reserva_form.asiento.errors %}
-                                <div class="text-danger">{{ reserva_form.asiento.errors }}</div>
+                            {{ pasajero_form.nombre }}
+                            {% if pasajero_form.nombre.errors %}
+                                <div class="text-danger">{{ pasajero_form.nombre.errors }}</div>
                             {% endif %}
                         </div>
-                        
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary btn-lg">
-                                <i class="fas fa-check"></i> {% trans "Confirmar Reserva" %}
-                            </button>
-                            <a href="{% url 'detalle_vuelo' vuelo.id %}" class="btn btn-secondary btn-lg ms-2">
-                                <i class="fas fa-arrow-left"></i> {% trans "Volver" %}
-                            </a>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ pasajero_form.documento.id_for_label }}" class="form-label">
+                                {% trans "Documento" %} *
+                            </label>
+                            {{ pasajero_form.documento }}
+                            {% if pasajero_form.documento.errors %}
+                                <div class="text-danger">{{ pasajero_form.documento.errors }}</div>
+                            {% endif %}
                         </div>
-                    </form>
-                </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ pasajero_form.tipo_documento.id_for_label }}" class="form-label">
+                                {% trans "Tipo de Documento" %} *
+                            </label>
+                            {{ pasajero_form.tipo_documento }}
+                            {% if pasajero_form.tipo_documento.errors %}
+                                <div class="text-danger">{{ pasajero_form.tipo_documento.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ pasajero_form.email.id_for_label }}" class="form-label">
+                                {% trans "Email" %} *
+                            </label>
+                            {{ pasajero_form.email }}
+                            {% if pasajero_form.email.errors %}
+                                <div class="text-danger">{{ pasajero_form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ pasajero_form.telefono.id_for_label }}" class="form-label">
+                                {% trans "Teléfono" %} *
+                            </label>
+                            {{ pasajero_form.telefono }}
+                            {% if pasajero_form.telefono.errors %}
+                                <div class="text-danger">{{ pasajero_form.telefono.errors }}</div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="{{ pasajero_form.fecha_nacimiento.id_for_label }}" class="form-label">
+                                {% trans "Fecha de Nacimiento" %} *
+                            </label>
+                            {{ pasajero_form.fecha_nacimiento }}
+                            {% if pasajero_form.fecha_nacimiento.errors %}
+                                <div class="text-danger">{{ pasajero_form.fecha_nacimiento.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <!-- Seat Selection -->
+                    <div class="mb-3">
+                        <label for="{{ reserva_form.asiento.id_for_label }}" class="form-label">
+                            {% trans "Seleccionar Asiento" %} *
+                        </label>
+                        {{ reserva_form.asiento }}
+                        {% if reserva_form.asiento.errors %}
+                            <div class="text-danger">{{ reserva_form.asiento.errors }}</div>
+                        {% endif %}
+                    </div>
+                    
+                    <button type="submit" class="btn btn-gradient w-100 mt-3">
+                        <i class="fas fa-check"></i> {% trans "Confirmar Reserva" %}
+                    </button>
+                </form>
             </div>
         </div>
     </div>
