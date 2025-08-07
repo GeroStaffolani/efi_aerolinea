@@ -20,6 +20,8 @@ urlpatterns = [
     
     # AJAX
     path('ajax/asientos/<int:vuelo_id>/', views.obtener_asientos_ajax, name='obtener_asientos_ajax'),
+    path('ajax/ciudades/', views.obtener_ciudades_ajax, name='obtener_ciudades_ajax'),
+    path('ajax/sugerencias-viajes/', views.obtener_sugerencias_viajes_ajax, name='obtener_sugerencias_viajes_ajax'),
     
     # Autenticación
     path('login/', auth_views.LoginView.as_view(), name='login'),

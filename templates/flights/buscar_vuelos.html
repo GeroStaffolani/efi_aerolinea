@@ -7,26 +7,53 @@
 {% block content %}
 <div class="container airline-section">
     <div class="row justify-content-center">
-        <div class="col-lg-8">
+        <div class="col-lg-10">
             <h1 class="airline-title airline-gradient-text mb-5">
                 <i class="fas fa-search"></i> {% trans "Buscar Vuelos" %}
             </h1>
+            
+            <!-- Sugerencias de Viajes Populares -->
+            <div class="mb-5">
+                <h3 class="mb-4"><i class="fas fa-fire"></i> {% trans "Destinos Populares" %}</h3>
+                <div id="sugerencias-viajes" class="row">
+                    <!-- Se cargarán vía AJAX -->
+                </div>
+            </div>
+            
             <!-- Search Form -->
             <div class="airline-card mb-5 p-4">
-                <form method="post">
+                <form method="post" id="buscar-vuelos-form">
                     {% csrf_token %}
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="{{ form.origen.id_for_label }}" class="form-label">
                                 <i class="fas fa-plane-departure"></i> {% trans "Origen" %}
                             </label>
-                            {{ form.origen }}
+                            <div class="autocomplete-wrapper">
+                                <input type="text" 
+                                       class="form-control autocomplete-input" 
+                                       name="origen" 
+                                       id="{{ form.origen.id_for_label }}" 
+                                       placeholder="{% trans 'Ciudad de origen' %}"
+                                       autocomplete="off"
+                                       value="{{ form.origen.value|default:'' }}">
+                                <div class="autocomplete-dropdown"></div>
+                            </div>
                         </div>
                         <div class="col-md-6 mb-3">
                             <label for="{{ form.destino.id_for_label }}" class="form-label">
                                 <i class="fas fa-plane-arrival"></i> {% trans "Destino" %}
                             </label>
-                            {{ form.destino }}
+                            <div class="autocomplete-wrapper">
+                                <input type="text" 
+                                       class="form-control autocomplete-input" 
+                                       name="destino" 
+                                       id="{{ form.destino.id_for_label }}" 
+                                       placeholder="{% trans 'Ciudad de destino' %}"
+                                       autocomplete="off"
+                                       value="{{ form.destino.value|default:'' }}">
+                                <div class="autocomplete-dropdown"></div>
+                            </div>
                         </div>
                     </div>
                     <div class="row">
@@ -44,11 +71,10 @@
                         </div>
                     </div>
                     <button type="submit" class="btn btn-gradient w-100 mt-3">
-                        <i class="fas fa-search"></i> {% trans "Buscar" %}
+                        <i class="fas fa-search"></i> {% trans "Buscar Vuelos" %}
                     </button>
                 </form>
             </div>
-            
             <!-- Search Results -->
             {% if vuelos %}
                 <h2 class="mb-4">{% trans "Resultados de Búsqueda" %}</h2>
@@ -104,4 +130,301 @@
         </div>
     </div>
 </div>
+
+<style>
+    /* Estilos para autocompletado */
+    .autocomplete-wrapper {
+        position: relative;
+    }
+
+    .autocomplete-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        border: 1px solid #e0eafc;
+        border-top: none;
+        border-radius: 0 0 8px 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        display: none;
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+    .autocomplete-item {
+        padding: 12px 16px;
+        cursor: pointer;
+        border-bottom: 1px solid #f0f0f0;
+        transition: background-color 0.2s;
+        display: flex;
+        align-items: center;
+    }
+
+    .autocomplete-item:hover,
+    .autocomplete-item.active {
+        background-color: #f8fafc;
+        color: #1a2980;
+    }
+
+    .autocomplete-item:last-child {
+        border-bottom: none;
+    }
+
+    .autocomplete-item i {
+        margin-right: 8px;
+        color: #26d0ce;
+    }
+
+    /* Estilos para sugerencias de viajes */
+    .suggestion-card {
+        background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+        border: 2px solid #e0eafc;
+        border-radius: 16px;
+        padding: 20px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        height: 100%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .suggestion-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #1a2980 0%, #26d0ce 100%);
+        transform: scaleX(0);
+        transition: transform 0.3s ease;
+    }
+
+    .suggestion-card:hover {
+        transform: translateY(-5px);
+        border-color: #26d0ce;
+        box-shadow: 0 10px 25px rgba(26, 41, 128, 0.1);
+    }
+
+    .suggestion-card:hover::before {
+        transform: scaleX(1);
+    }
+
+    .suggestion-route {
+        font-size: 1.2rem;
+        font-weight: 600;
+        color: #1a2980;
+        margin-bottom: 8px;
+        font-family: 'Montserrat', sans-serif;
+    }
+
+    .suggestion-price {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: #26d0ce;
+        margin-bottom: 5px;
+    }
+
+    .suggestion-popularity {
+        font-size: 0.85rem;
+        color: #718096;
+        display: flex;
+        align-items: center;
+    }
+
+    .suggestion-popularity i {
+        margin-right: 5px;
+        color: #f9d423;
+    }
+
+    /* Loading spinner */
+    .suggestions-loading {
+        text-align: center;
+        padding: 40px;
+        color: #718096;
+    }
+
+    .suggestions-loading i {
+        font-size: 2rem;
+        margin-bottom: 10px;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        from { transform: rotate(0deg); }
+        to { transform: rotate(360deg); }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .suggestion-card {
+            margin-bottom: 15px;
+        }
+    }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Cargar sugerencias de viajes al inicio
+    cargarSugerenciasViajes();
+    
+    // Configurar autocompletado para campos de ciudades
+    configurarAutocompletado();
+});
+
+function cargarSugerenciasViajes() {
+    const container = document.getElementById('sugerencias-viajes');
+    container.innerHTML = '<div class="suggestions-loading col-12"><i class="fas fa-spinner"></i><br>Cargando destinos populares...</div>';
+    
+    fetch('{% url "obtener_sugerencias_viajes_ajax" %}')
+        .then(response => response.json())
+        .then(data => {
+            container.innerHTML = '';
+            
+            if (data.sugerencias && data.sugerencias.length > 0) {
+                data.sugerencias.forEach(sugerencia => {
+                    const card = document.createElement('div');
+                    card.className = 'col-lg-4 col-md-6 mb-3';
+                    card.innerHTML = `
+                        <div class="suggestion-card" onclick="llenarFormulario('${sugerencia.origen}', '${sugerencia.destino}')">
+                            <div class="suggestion-route">
+                                <i class="fas fa-plane"></i>
+                                ${sugerencia.origen} → ${sugerencia.destino}
+                            </div>
+                            <div class="suggestion-price">
+                                Desde $${sugerencia.precio_desde}
+                            </div>
+                            <div class="suggestion-popularity">
+                                <i class="fas fa-fire"></i>
+                                ${sugerencia.reservas} reservas
+                            </div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } else {
+                container.innerHTML = '<div class="col-12"><p class="text-muted text-center">No hay sugerencias disponibles</p></div>';
+            }
+        })
+        .catch(error => {
+            console.error('Error cargando sugerencias:', error);
+            container.innerHTML = '<div class="col-12"><p class="text-muted text-center">Error cargando sugerencias</p></div>';
+        });
+}
+
+function configurarAutocompletado() {
+    const inputs = document.querySelectorAll('.autocomplete-input');
+    
+    inputs.forEach(input => {
+        const dropdown = input.parentNode.querySelector('.autocomplete-dropdown');
+        let timeout;
+        let activeIndex = -1;
+        
+        input.addEventListener('input', function() {
+            clearTimeout(timeout);
+            const query = this.value.trim();
+            
+            if (query.length < 2) {
+                dropdown.style.display = 'none';
+                return;
+            }
+            
+            timeout = setTimeout(() => {
+                buscarCiudades(query, dropdown);
+            }, 300);
+        });
+        
+        input.addEventListener('blur', function() {
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 200);
+        });
+        
+        input.addEventListener('focus', function() {
+            if (dropdown.children.length > 0) {
+                dropdown.style.display = 'block';
+            }
+        });
+        
+        input.addEventListener('keydown', function(e) {
+            const items = dropdown.querySelectorAll('.autocomplete-item');
+            
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                activeIndex = Math.min(activeIndex + 1, items.length - 1);
+                updateActiveItem(items, activeIndex);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                activeIndex = Math.max(activeIndex - 1, -1);
+                updateActiveItem(items, activeIndex);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (activeIndex >= 0 && items[activeIndex]) {
+                    seleccionarCiudad(input, items[activeIndex].textContent.trim(), dropdown);
+                }
+            } else if (e.key === 'Escape') {
+                dropdown.style.display = 'none';
+                activeIndex = -1;
+            }
+        });
+    });
+}
+
+function buscarCiudades(query, dropdown) {
+    fetch(`{% url "obtener_ciudades_ajax" %}?q=${encodeURIComponent(query)}`)
+        .then(response => response.json())
+        .then(data => {
+            dropdown.innerHTML = '';
+            
+            if (data.ciudades && data.ciudades.length > 0) {
+                data.ciudades.forEach(ciudad => {
+                    const item = document.createElement('div');
+                    item.className = 'autocomplete-item';
+                    item.innerHTML = `<i class="fas fa-map-marker-alt"></i> ${ciudad}`;
+                    item.addEventListener('click', function() {
+                        const input = dropdown.parentNode.querySelector('.autocomplete-input');
+                        seleccionarCiudad(input, ciudad, dropdown);
+                    });
+                    dropdown.appendChild(item);
+                });
+                dropdown.style.display = 'block';
+            } else {
+                dropdown.style.display = 'none';
+            }
+        })
+        .catch(error => {
+            console.error('Error en autocompletado:', error);
+            dropdown.style.display = 'none';
+        });
+}
+
+function updateActiveItem(items, activeIndex) {
+    items.forEach((item, index) => {
+        item.classList.toggle('active', index === activeIndex);
+    });
+}
+
+function seleccionarCiudad(input, ciudad, dropdown) {
+    input.value = ciudad;
+    dropdown.style.display = 'none';
+    input.focus();
+}
+
+function llenarFormulario(origen, destino) {
+    document.getElementById('{{ form.origen.id_for_label }}').value = origen;
+    document.getElementById('{{ form.destino.id_for_label }}').value = destino;
+    
+    // Scroll al formulario
+    document.getElementById('buscar-vuelos-form').scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    });
+    
+    // Enfocar en el campo de fecha
+    document.getElementById('{{ form.fecha_salida.id_for_label }}').focus();
+}
+</script>
+
 {% endblock %}

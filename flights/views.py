@@ -239,15 +239,65 @@ def obtener_asientos_ajax(request, vuelo_id):
             precio = vuelo.precio_base * 2
         elif asiento.tipo == 'ejecutiva':
             precio = vuelo.precio_base * 1.5
-            
+        
         asientos.append({
             'id': asiento.id,
             'numero': asiento.numero,
-            'fila': asiento.fila,
-            'columna': asiento.columna,
             'tipo': asiento.tipo,
             'precio': float(precio),
-            'disponible': asiento.id not in asientos_ocupados
+            'ocupado': asiento.id in asientos_ocupados
         })
     
     return JsonResponse({'asientos': asientos})
+
+def obtener_ciudades_ajax(request):
+    """Vista AJAX para autocompletado de ciudades"""
+    query = request.GET.get('q', '').strip()
+    
+    if len(query) < 2:
+        return JsonResponse({'ciudades': []})
+    
+    # Obtener ciudades únicas de origen y destino
+    ciudades_origen = Vuelo.objects.filter(
+        origen__icontains=query
+    ).values_list('origen', flat=True).distinct()
+    
+    ciudades_destino = Vuelo.objects.filter(
+        destino__icontains=query
+    ).values_list('destino', flat=True).distinct()
+    
+    # Combinar y eliminar duplicados
+    todas_ciudades = set(list(ciudades_origen) + list(ciudades_destino))
+    ciudades_filtradas = [ciudad for ciudad in todas_ciudades if query.lower() in ciudad.lower()]
+    
+    return JsonResponse({'ciudades': sorted(ciudades_filtradas)[:10]})
+
+def obtener_sugerencias_viajes_ajax(request):
+    """Vista AJAX para obtener sugerencias de viajes populares"""
+    # Obtener los destinos más populares
+    destinos_populares = Vuelo.objects.filter(
+        fecha_salida__gte=datetime.now(),
+        estado='programado'
+    ).values('origen', 'destino').annotate(
+        count=Count('reservas')
+    ).order_by('-count')[:6]
+    
+    sugerencias = []
+    for destino in destinos_populares:
+        # Obtener el vuelo más barato para esta ruta
+        vuelo_barato = Vuelo.objects.filter(
+            origen=destino['origen'],
+            destino=destino['destino'],
+            fecha_salida__gte=datetime.now(),
+            estado='programado'
+        ).order_by('precio_base').first()
+        
+        if vuelo_barato:
+            sugerencias.append({
+                'origen': destino['origen'],
+                'destino': destino['destino'],
+                'precio_desde': float(vuelo_barato.precio_base),
+                'reservas': destino['count']
+            })
+    
+    return JsonResponse({'sugerencias': sugerencias})

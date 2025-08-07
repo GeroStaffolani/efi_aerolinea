@@ -1,6 +1,6 @@
 from django.db import transaction
 from django.utils.translation import gettext as _
-from django.db.models import Count, Q
+from django.db.models import Count, Q, F
 from .models import Vuelo, Reserva, Pasajero, Boleto, Asiento
 from datetime import datetime, date
 
