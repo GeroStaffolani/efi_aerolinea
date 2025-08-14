@@ -50,7 +50,7 @@
             color: var(--accent-color) !important;
         }
         .hero-section {
-            background: url('{% static "img/hero-bg.jpg" %}'), var(--gradient);
+            background: var(--gradient);
             background-size: cover;
             background-blend-mode: multiply;
             color: white;
@@ -288,7 +288,9 @@
                                 <li>
                                     <form action="/i18n/setlang/" method="post" class="d-inline lang-form">
                                         {% csrf_token %}
-                                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
+                                        {% with request.get_full_path|cut:'/en'|cut:'/es' as clean_path %}
+                                            <input name="next" type="hidden" value="{{ clean_path }}">
+                                        {% endwith %}
                                         <input name="language" type="hidden" value="{{ lang_code }}">
                                         <button type="submit" class="dropdown-item lang-btn">{{ lang_name }}</button>
                                     </form>
@@ -378,15 +380,6 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-    // Forzar el submit del formulario de idioma para evitar problemas con el dropdown
-    document.querySelectorAll('.lang-btn').forEach(function(btn) {
-        btn.addEventListener('click', function(e) {
-            e.preventDefault();
-            btn.closest('form').submit();
-        });
-    });
-    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

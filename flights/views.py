@@ -297,6 +297,7 @@ def obtener_sugerencias_viajes_ajax(request):
                 'origen': destino['origen'],
                 'destino': destino['destino'],
                 'precio_desde': float(vuelo_barato.precio_base),
+                'fecha_salida': vuelo_barato.fecha_salida.strftime('%Y-%m-%d'),
                 'reservas': destino['count']
             })
     

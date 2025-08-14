@@ -288,7 +288,7 @@ function cargarSugerenciasViajes() {
                     const card = document.createElement('div');
                     card.className = 'col-lg-4 col-md-6 mb-3';
                     card.innerHTML = `
-                        <div class="suggestion-card" onclick="llenarFormulario('${sugerencia.origen}', '${sugerencia.destino}')">
+                        <div class="suggestion-card" onclick="llenarFormulario('${sugerencia.origen}', '${sugerencia.destino}', '${sugerencia.fecha_salida}')">
                             <div class="suggestion-route">
                                 <i class="fas fa-plane"></i>
                                 ${sugerencia.origen} → ${sugerencia.destino}
@@ -412,16 +412,17 @@ function seleccionarCiudad(input, ciudad, dropdown) {
     input.focus();
 }
 
-function llenarFormulario(origen, destino) {
+function llenarFormulario(origen, destino, fecha) {
     document.getElementById('{{ form.origen.id_for_label }}').value = origen;
     document.getElementById('{{ form.destino.id_for_label }}').value = destino;
-    
+    if (fecha) {
+        document.getElementById('{{ form.fecha_salida.id_for_label }}').value = fecha;
+    }
     // Scroll al formulario
     document.getElementById('buscar-vuelos-form').scrollIntoView({
         behavior: 'smooth',
         block: 'center'
     });
-    
     // Enfocar en el campo de fecha
     document.getElementById('{{ form.fecha_salida.id_for_label }}').focus();
 }
