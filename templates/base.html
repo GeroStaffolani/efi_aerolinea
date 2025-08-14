@@ -276,17 +276,21 @@
                     <!-- Language Selector -->
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown">
-                            <i class="fas fa-globe"></i> {% get_current_language as LANGUAGE_CODE %}{{ LANGUAGE_CODE|upper }}
+                            <i class="fas fa-globe"></i>
+                            {% get_current_language as LANGUAGE_CODE %}
+                            {% get_available_languages as LANGUAGES %}
+                            {% for code, name in LANGUAGES %}
+                                {% if code == LANGUAGE_CODE %}{{ name }}{% endif %}
+                            {% endfor %}
                         </a>
                         <ul class="dropdown-menu">
-                            {% get_available_languages as LANGUAGES %}
                             {% for lang_code, lang_name in LANGUAGES %}
                                 <li>
-                                    <form action="{% url 'set_language' %}" method="post" class="d-inline">
+                                    <form action="/i18n/setlang/" method="post" class="d-inline lang-form">
                                         {% csrf_token %}
-                                        <input name="next" type="hidden" value="{{ request.path }}">
+                                        <input name="next" type="hidden" value="{{ request.get_full_path }}">
                                         <input name="language" type="hidden" value="{{ lang_code }}">
-                                        <button type="submit" class="dropdown-item">{{ lang_name }}</button>
+                                        <button type="submit" class="dropdown-item lang-btn">{{ lang_name }}</button>
                                     </form>
                                 </li>
                             {% endfor %}
@@ -321,8 +325,8 @@
     <section class="hero-section">
         <span class="plane-anim"><i class="fas fa-plane"></i></span>
         <div class="container">
-            <h1 class="fw-bold mb-4">{% block hero_title %}¡Bienvenido a {{ airline_name }}!{% endblock %}</h1>
-            <p>{% block hero_subtitle %}{{ airline_slogan }}{% endblock %}</p>
+            <h1 class="fw-bold mb-4">{% block hero_title %}{% trans airline_name %}{% endblock %}</h1>
+            <p>{% block hero_subtitle %}{% trans airline_slogan %}{% endblock %}</p>
             <a href="{% url 'buscar_vuelos' %}" class="btn">{% trans "Reserva tu vuelo ahora" %}</a>
         </div>
     </section>
@@ -374,6 +378,15 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+    // Forzar el submit del formulario de idioma para evitar problemas con el dropdown
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            e.preventDefault();
+            btn.closest('form').submit();
+        });
+    });
+    </script>
     {% block extra_js %}{% endblock %}
 </body>
 </html>

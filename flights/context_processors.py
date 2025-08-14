@@ -1,8 +1,8 @@
-from django.utils.translation import gettext as _
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
 from .models import Vuelo, Reserva
 
 def airline_context(request):
-    """Context processor para datos globales de la aerolínea"""
     return {
         'airline_name': _('AeroSystem'),
         'airline_slogan': _('Volamos hacia el futuro'),
@@ -13,6 +13,5 @@ def airline_context(request):
         'idiomas_disponibles': [
             {'code': 'es', 'name': 'Español'},
             {'code': 'en', 'name': 'English'},
-            {'code': 'fr', 'name': 'Français'},
         ]
     }

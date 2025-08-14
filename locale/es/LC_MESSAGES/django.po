@@ -1,0 +1,853 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-08-14 11:32-0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: flights/context_processors.py:7
+msgid "AeroSystem"
+msgstr "AeroSystem"
+
+#: flights/context_processors.py:8
+msgid "Volamos hacia el futuro"
+msgstr "Volamos hacia el futuro"
+
+#: flights/forms.py:11
+msgid "Nombre completo"
+msgstr "Nombre completo"
+
+#: flights/forms.py:12
+msgid "Número de documento"
+msgstr "Número de documento"
+
+#: flights/forms.py:14 flights/models.py:96
+#: templates/flights/crear_reserva.html:72
+#: templates/flights/reporte_pasajeros_vuelo.html:23
+msgid "Email"
+msgstr "Correo electrónico"
+
+#: flights/forms.py:15 flights/models.py:97
+#: templates/flights/crear_reserva.html:84
+#: templates/flights/reporte_pasajeros_vuelo.html:24
+msgid "Teléfono"
+msgstr "Teléfono"
+
+#: flights/forms.py:22
+msgid "La fecha de nacimiento no puede ser futura"
+msgstr "La fecha de nacimiento no puede ser futura"
+
+#: flights/forms.py:28 templates/flights/buscar_vuelos.html:37
+msgid "Ciudad de origen"
+msgstr "Ciudad de origen"
+
+#: flights/forms.py:32 templates/flights/buscar_vuelos.html:52
+msgid "Ciudad de destino"
+msgstr "Ciudad de destino"
+
+#: flights/models.py:9
+msgid "Modelo"
+msgstr "Modelo"
+
+#: flights/models.py:10
+msgid "Capacidad"
+msgstr "Capacidad"
+
+#: flights/models.py:11
+msgid "Filas"
+msgstr "Filas"
+
+#: flights/models.py:12
+msgid "Columnas"
+msgstr "Columnas"
+
+#: flights/models.py:13 flights/models.py:66
+msgid "Fecha de Creación"
+msgstr "Fecha de Creación"
+
+#: flights/models.py:14
+msgid "Activo"
+msgstr "Activo"
+
+#: flights/models.py:17 flights/models.py:57 flights/models.py:126
+msgid "Avión"
+msgstr "Avión"
+
+#: flights/models.py:18
+msgid "Aviones"
+msgstr "Aviones"
+
+#: flights/models.py:49
+msgid "Programado"
+msgstr "Programado"
+
+#: flights/models.py:50
+msgid "Abordando"
+msgstr "Abordando"
+
+#: flights/models.py:51
+msgid "En Vuelo"
+msgstr "En Vuelo"
+
+#: flights/models.py:52
+msgid "Aterrizado"
+msgstr "Aterrizado"
+
+#: flights/models.py:53 flights/models.py:185
+msgid "Cancelado"
+msgstr "Cancelado"
+
+#: flights/models.py:54
+msgid "Retrasado"
+msgstr "Retrasado"
+
+#: flights/models.py:58
+msgid "Código de Vuelo"
+msgstr "Código de Vuelo"
+
+#: flights/models.py:59 templates/flights/buscar_vuelos.html:30
+msgid "Origen"
+msgstr "Origen"
+
+#: flights/models.py:60 templates/flights/buscar_vuelos.html:45
+msgid "Destino"
+msgstr "Destino"
+
+#: flights/models.py:61 templates/flights/buscar_vuelos.html:62
+msgid "Fecha de Salida"
+msgstr "Fecha de Salida"
+
+#: flights/models.py:62
+msgid "Fecha de Llegada"
+msgstr "Fecha de Llegada"
+
+#: flights/models.py:63
+msgid "Duración"
+msgstr "Duración"
+
+#: flights/models.py:64 flights/models.py:131 flights/models.py:152
+#: flights/models.py:191
+msgid "Estado"
+msgstr "Estado"
+
+#: flights/models.py:65
+msgid "Precio Base"
+msgstr "Precio Base"
+
+#: flights/models.py:69 flights/models.py:149
+#: templates/flights/reporte_pasajeros_vuelo.html:13
+msgid "Vuelo"
+msgstr "Vuelo"
+
+#: flights/models.py:70
+msgid "Vuelos"
+msgstr "Vuelos"
+
+#: flights/models.py:88
+msgid "DNI"
+msgstr "DNI"
+
+#: flights/models.py:89
+msgid "Pasaporte"
+msgstr "Pasaporte"
+
+#: flights/models.py:90
+msgid "Cédula"
+msgstr "Cédula"
+
+#: flights/models.py:93 templates/flights/crear_reserva.html:42
+msgid "Nombre Completo"
+msgstr "Nombre Completo"
+
+#: flights/models.py:94 templates/flights/crear_reserva.html:51
+#: templates/flights/reporte_pasajeros_vuelo.html:22
+msgid "Documento"
+msgstr "Documento"
+
+#: flights/models.py:95 templates/flights/crear_reserva.html:63
+msgid "Tipo de Documento"
+msgstr "Tipo de Documento"
+
+#: flights/models.py:98 templates/flights/crear_reserva.html:93
+msgid "Fecha de Nacimiento"
+msgstr "Fecha de Nacimiento"
+
+#: flights/models.py:99
+msgid "Fecha de Registro"
+msgstr "Fecha de Registro"
+
+#: flights/models.py:102 flights/models.py:150
+msgid "Pasajero"
+msgstr "Pasajero"
+
+#: flights/models.py:103 templates/flights/buscar_vuelos.html:68
+#: templates/flights/home.html:38
+msgid "Pasajeros"
+msgstr "Pasajeros"
+
+#: flights/models.py:114
+msgid "Primera Clase"
+msgstr "Primera Clase"
+
+#: flights/models.py:115
+msgid "Clase Ejecutiva"
+msgstr "Clase Ejecutiva"
+
+#: flights/models.py:116
+msgid "Clase Económica"
+msgstr "Clase Económica"
+
+#: flights/models.py:120 templates/flights/detalle_vuelo.html:115
+msgid "Disponible"
+msgstr "Disponible"
+
+#: flights/models.py:121
+msgid "Reservado"
+msgstr "Reservado"
+
+#: flights/models.py:122 templates/flights/detalle_vuelo.html:119
+msgid "Ocupado"
+msgstr "Ocupado"
+
+#: flights/models.py:123
+msgid "Mantenimiento"
+msgstr "Mantenimiento"
+
+#: flights/models.py:127
+msgid "Número"
+msgstr "Número"
+
+#: flights/models.py:128
+msgid "Fila"
+msgstr "Fila"
+
+#: flights/models.py:129
+msgid "Columna"
+msgstr "Columna"
+
+#: flights/models.py:130
+msgid "Tipo"
+msgstr "Tipo"
+
+#: flights/models.py:134 flights/models.py:151
+#: templates/flights/reporte_pasajeros_vuelo.html:25
+msgid "Asiento"
+msgstr "Asiento"
+
+#: flights/models.py:135
+msgid "Asientos"
+msgstr "Asientos"
+
+#: flights/models.py:143
+msgid "Pendiente"
+msgstr "Pendiente"
+
+#: flights/models.py:144
+msgid "Confirmada"
+msgstr "Confirmada"
+
+#: flights/models.py:145
+msgid "Cancelada"
+msgstr "Cancelada"
+
+#: flights/models.py:146
+msgid "Completada"
+msgstr "Completada"
+
+#: flights/models.py:153
+msgid "Fecha de Reserva"
+msgstr "Fecha de Reserva"
+
+#: flights/models.py:154
+msgid "Precio"
+msgstr "Precio"
+
+#: flights/models.py:155
+msgid "Código de Reserva"
+msgstr "Código de Reserva"
+
+#: flights/models.py:158 flights/models.py:188
+#: templates/flights/detalle_reserva.html:5
+msgid "Reserva"
+msgstr "Reserva"
+
+#: flights/models.py:159 templates/flights/home.html:45
+#: templates/flights/reportes.html:102
+msgid "Reservas"
+msgstr "Reservas"
+
+#: flights/models.py:183
+msgid "Emitido"
+msgstr "Emitido"
+
+#: flights/models.py:184
+msgid "Usado"
+msgstr "Usado"
+
+#: flights/models.py:189
+msgid "Código de Barra"
+msgstr "Código de Barra"
+
+#: flights/models.py:190
+msgid "Fecha de Emisión"
+msgstr "Fecha de Emisión"
+
+#: flights/models.py:194
+msgid "Boleto"
+msgstr "Boleto"
+
+#: flights/models.py:195
+msgid "Boletos"
+msgstr "Boletos"
+
+#: flights/services.py:49
+msgid "El asiento seleccionado ya no está disponible"
+msgstr "El asiento seleccionado ya no está disponible"
+
+#: flights/services.py:57
+msgid "El pasajero ya tiene una reserva para este vuelo"
+msgstr "El pasajero ya tiene una reserva para este vuelo"
+
+#: flights/services.py:81
+msgid "La reserva ya está cancelada"
+msgstr "La reserva ya está cancelada"
+
+#: flights/services.py:102
+msgid "Solo se pueden confirmar reservas pendientes"
+msgstr "Solo se pueden confirmar reservas pendientes"
+
+#: flights/views.py:114
+msgid "Reserva creada exitosamente"
+msgstr "Reserva creada exitosamente"
+
+#: flights/views.py:163
+msgid "Reserva cancelada exitosamente"
+msgstr "Reserva cancelada exitosamente"
+
+#: flights/views.py:178 flights/views.py:197
+msgid "No tienes permisos para acceder a esta sección"
+msgstr "No tienes permisos para acceder a esta sección"
+
+#: templates/base.html:256 templates/base.html:358
+#: templates/flights/home.html:5
+msgid "Inicio"
+msgstr "Inicio"
+
+#: templates/base.html:259 templates/base.html:359
+#: templates/flights/buscar_vuelos.html:5
+#: templates/flights/buscar_vuelos.html:12
+#: templates/flights/buscar_vuelos.html:74 templates/flights/home.html:17
+msgid "Buscar Vuelos"
+msgstr "Buscar Vuelos"
+
+#: templates/base.html:263 templates/flights/mis_reservas.html:5
+#: templates/flights/mis_reservas.html:10
+msgid "Mis Reservas"
+msgstr "Mis Reservas"
+
+#: templates/base.html:267 templates/flights/reportes.html:5
+msgid "Reportes"
+msgstr "Reportes"
+
+#: templates/base.html:270
+msgid "Administración"
+msgstr "Administración"
+
+#: templates/base.html:301
+msgid "Cerrar Sesión"
+msgstr "Cerrar Sesión"
+
+#: templates/base.html:309 templates/flights/detalle_vuelo.html:152
+#: templates/registration/login.html:5 templates/registration/login.html:13
+#: templates/registration/login.html:32
+msgid "Iniciar Sesión"
+msgstr "Iniciar Sesión"
+
+#: templates/base.html:312
+msgid "Registrarse"
+msgstr "Registrarse"
+
+#: templates/base.html:326
+msgid "Reserva tu vuelo ahora"
+msgstr "Reserva tu vuelo ahora"
+
+#: templates/base.html:356
+msgid "Enlaces Rápidos"
+msgstr "Enlaces Rápidos"
+
+#: templates/base.html:363
+msgid "Contacto"
+msgstr "Contacto"
+
+#: templates/base.html:370
+msgid "Todos los derechos reservados."
+msgstr "Todos los derechos reservados."
+
+#: templates/flights/buscar_vuelos.html:17
+msgid "Destinos Populares"
+msgstr "Destinos Populares"
+
+#: templates/flights/buscar_vuelos.html:80
+msgid "Resultados de Búsqueda"
+msgstr "Resultados de Búsqueda"
+
+#: templates/flights/buscar_vuelos.html:96
+msgid "Salida:"
+msgstr "Salida:"
+
+#: templates/flights/buscar_vuelos.html:99
+msgid "Llegada:"
+msgstr "Llegada:"
+
+#: templates/flights/buscar_vuelos.html:102
+#: templates/flights/crear_reserva.html:26
+#: templates/flights/detalle_vuelo.html:68
+msgid "Duración:"
+msgstr "Duración:"
+
+#: templates/flights/buscar_vuelos.html:106 templates/flights/home.html:82
+msgid "asientos disponibles"
+msgstr "asientos disponibles"
+
+#: templates/flights/buscar_vuelos.html:113
+msgid "por persona"
+msgstr "por persona"
+
+#: templates/flights/buscar_vuelos.html:115 templates/flights/home.html:86
+#: templates/flights/mis_reservas.html:31
+msgid "Ver Detalles"
+msgstr "Ver Detalles"
+
+#: templates/flights/buscar_vuelos.html:127
+msgid "No se encontraron vuelos que coincidan con tu búsqueda."
+msgstr "No se encontraron vuelos que coincidan con tu búsqueda."
+
+#: templates/flights/cancelar_reserva.html:4
+#: templates/flights/cancelar_reserva.html:12
+msgid "Cancelar Reserva"
+msgstr "Cancelar Reserva"
+
+#: templates/flights/cancelar_reserva.html:15
+msgid "¿Estás seguro que deseas cancelar la reserva?"
+msgstr "¿Estás seguro que deseas cancelar la reserva?"
+
+#: templates/flights/cancelar_reserva.html:17
+#: templates/flights/detalle_reserva.html:22
+#: templates/flights/mis_reservas.html:23
+msgid "Código de Reserva:"
+msgstr "Código de Reserva:"
+
+#: templates/flights/cancelar_reserva.html:18
+#: templates/flights/crear_reserva.html:20
+msgid "Vuelo:"
+msgstr "Vuelo:"
+
+#: templates/flights/cancelar_reserva.html:19
+#: templates/flights/crear_reserva.html:21
+#: templates/flights/mis_reservas.html:24
+msgid "Ruta:"
+msgstr "Ruta:"
+
+#: templates/flights/cancelar_reserva.html:20
+#: templates/flights/crear_reserva.html:22
+#: templates/flights/mis_reservas.html:25
+msgid "Fecha:"
+msgstr "Fecha:"
+
+#: templates/flights/cancelar_reserva.html:21
+#: templates/flights/mis_reservas.html:26
+msgid "Asiento:"
+msgstr "Asiento:"
+
+#: templates/flights/cancelar_reserva.html:22
+#: templates/flights/mis_reservas.html:27
+msgid "Pasajero:"
+msgstr "Pasajero:"
+
+#: templates/flights/cancelar_reserva.html:27
+msgid "Confirmar Cancelación"
+msgstr "Confirmar Cancelación"
+
+#: templates/flights/cancelar_reserva.html:30
+msgid "Volver"
+msgstr "Volver"
+
+#: templates/flights/crear_reserva.html:5
+#: templates/flights/crear_reserva.html:12
+msgid "Crear Reserva"
+msgstr "Crear Reserva"
+
+#: templates/flights/crear_reserva.html:17
+msgid "Resumen del Vuelo"
+msgstr "Resumen del Vuelo"
+
+#: templates/flights/crear_reserva.html:25
+msgid "Avión:"
+msgstr "Avión:"
+
+#: templates/flights/crear_reserva.html:27
+#: templates/flights/detalle_vuelo.html:80
+msgid "Precio Base:"
+msgstr "Precio Base:"
+
+#: templates/flights/crear_reserva.html:34
+#: templates/flights/detalle_reserva.html:28
+msgid "Información del Pasajero"
+msgstr "Información del Pasajero"
+
+#: templates/flights/crear_reserva.html:105
+msgid "Seleccionar Asiento"
+msgstr "Seleccionar Asiento"
+
+#: templates/flights/crear_reserva.html:114
+msgid "Confirmar Reserva"
+msgstr "Confirmar Reserva"
+
+#: templates/flights/detalle_reserva.html:13
+msgid "¡Reserva Confirmada!"
+msgstr "¡Reserva Confirmada!"
+
+#: templates/flights/detalle_reserva.html:14
+msgid "Tu reserva ha sido procesada exitosamente"
+msgstr "Tu reserva ha sido procesada exitosamente"
+
+#: templates/flights/detalle_reserva.html:18
+msgid "Detalles de la Reserva"
+msgstr "Detalles de la Reserva"
+
+#: templates/flights/detalle_reserva.html:21
+msgid "Información de la Reserva"
+msgstr "Información de la Reserva"
+
+#: templates/flights/detalle_reserva.html:23
+#: templates/flights/detalle_vuelo.html:69
+msgid "Estado:"
+msgstr "Estado:"
+
+#: templates/flights/detalle_reserva.html:24
+msgid "Fecha de Reserva:"
+msgstr "Fecha de Reserva:"
+
+#: templates/flights/detalle_reserva.html:25
+msgid "Precio Total:"
+msgstr "Precio Total:"
+
+#: templates/flights/detalle_reserva.html:29
+msgid "Nombre:"
+msgstr "Nombre:"
+
+#: templates/flights/detalle_reserva.html:30
+msgid "Documento:"
+msgstr "Documento:"
+
+#: templates/flights/detalle_reserva.html:31
+msgid "Email:"
+msgstr "Email:"
+
+#: templates/flights/detalle_reserva.html:36
+msgid "Volver a Mis Reservas"
+msgstr "Volver a Mis Reservas"
+
+#: templates/flights/detalle_vuelo.html:63
+msgid "Información del Vuelo"
+msgstr "Información del Vuelo"
+
+#: templates/flights/detalle_vuelo.html:64
+msgid "Origen:"
+msgstr "Origen:"
+
+#: templates/flights/detalle_vuelo.html:65
+msgid "Destino:"
+msgstr "Destino:"
+
+#: templates/flights/detalle_vuelo.html:66
+msgid "Fecha de Salida:"
+msgstr "Fecha de Salida:"
+
+#: templates/flights/detalle_vuelo.html:67
+msgid "Fecha de Llegada:"
+msgstr "Fecha de Llegada:"
+
+#: templates/flights/detalle_vuelo.html:74
+msgid "Información del Avión"
+msgstr "Información del Avión"
+
+#: templates/flights/detalle_vuelo.html:75
+msgid "Modelo:"
+msgstr "Modelo:"
+
+#: templates/flights/detalle_vuelo.html:76
+msgid "Capacidad:"
+msgstr "Capacidad:"
+
+#: templates/flights/detalle_vuelo.html:76
+msgid "asientos"
+msgstr "asientos"
+
+#: templates/flights/detalle_vuelo.html:77
+msgid "Asientos Disponibles:"
+msgstr "Asientos Disponibles:"
+
+#: templates/flights/detalle_vuelo.html:91
+msgid "Mapa de Asientos"
+msgstr "Mapa de Asientos"
+
+#: templates/flights/detalle_vuelo.html:123
+msgid "Seleccionado"
+msgstr "Seleccionado"
+
+#: templates/flights/detalle_vuelo.html:135
+msgid "Resumen de Reserva"
+msgstr "Resumen de Reserva"
+
+#: templates/flights/detalle_vuelo.html:139
+msgid "Asiento Seleccionado:"
+msgstr "Asiento Seleccionado:"
+
+#: templates/flights/detalle_vuelo.html:140
+msgid "Tipo:"
+msgstr "Tipo:"
+
+#: templates/flights/detalle_vuelo.html:141
+#: templates/flights/mis_reservas.html:28
+msgid "Precio:"
+msgstr "Precio:"
+
+#: templates/flights/detalle_vuelo.html:143
+msgid "Total:"
+msgstr "Total:"
+
+#: templates/flights/detalle_vuelo.html:147
+msgid "Reservar Ahora"
+msgstr "Reservar Ahora"
+
+#: templates/flights/detalle_vuelo.html:150
+msgid "Debes iniciar sesión para hacer una reserva"
+msgstr "Debes iniciar sesión para hacer una reserva"
+
+#: templates/flights/detalle_vuelo.html:160
+msgid "Selecciona un asiento para continuar"
+msgstr "Selecciona un asiento para continuar"
+
+#: templates/flights/home.html:15
+msgid "Descubre el mundo con AeroSystem"
+msgstr "Descubre el mundo con AeroSystem"
+
+#: templates/flights/home.html:16
+msgid "Vuelos directos, seguros y cómodos a los mejores destinos."
+msgstr "Vuelos directos, seguros y cómodos a los mejores destinos."
+
+#: templates/flights/home.html:31
+msgid "Vuelos Totales"
+msgstr "Vuelos Totales"
+
+#: templates/flights/home.html:52
+msgid "Vuelos Hoy"
+msgstr "Vuelos Hoy"
+
+#: templates/flights/home.html:62
+msgid "Vuelos Destacados"
+msgstr "Vuelos Destacados"
+
+#: templates/flights/home.html:92
+msgid "No hay vuelos disponibles en este momento."
+msgstr "No hay vuelos disponibles en este momento."
+
+#: templates/flights/home.html:102
+msgid "Nuestros Servicios"
+msgstr "Nuestros Servicios"
+
+#: templates/flights/home.html:107
+msgid "Seguridad Garantizada"
+msgstr "Seguridad Garantizada"
+
+#: templates/flights/home.html:108
+msgid "Cumplimos con los más altos estándares de seguridad internacional."
+msgstr "Cumplimos con los más altos estándares de seguridad internacional."
+
+#: templates/flights/home.html:114
+msgid "Puntualidad"
+msgstr "Puntualidad"
+
+#: templates/flights/home.html:115
+msgid "Nos comprometemos con la puntualidad en todos nuestros vuelos."
+msgstr "Nos comprometemos con la puntualidad en todos nuestros vuelos."
+
+#: templates/flights/home.html:121
+msgid "Atención 24/7"
+msgstr "Atención 24/7"
+
+#: templates/flights/home.html:122
+msgid "Nuestro equipo de soporte está disponible las 24 horas del día."
+msgstr "Nuestro equipo de soporte está disponible las 24 horas del día."
+
+#: templates/flights/mis_reservas.html:35
+msgid "Cancelar"
+msgstr "Cancelar"
+
+#: templates/flights/mis_reservas.html:45
+msgid "No tienes reservas aún."
+msgstr "No tienes reservas aún."
+
+#: templates/flights/reporte_pasajeros_vuelo.html:4
+#: templates/flights/reporte_pasajeros_vuelo.html:9
+msgid "Pasajeros del Vuelo"
+msgstr "Pasajeros del Vuelo"
+
+#: templates/flights/reporte_pasajeros_vuelo.html:14
+#: templates/flights/reportes.html:101
+msgid "Fecha"
+msgstr "Fecha"
+
+#: templates/flights/reporte_pasajeros_vuelo.html:21
+msgid "Nombre"
+msgstr "Nombre"
+
+#: templates/flights/reporte_pasajeros_vuelo.html:43
+msgid "No hay pasajeros para este vuelo."
+msgstr "No hay pasajeros para este vuelo."
+
+#: templates/flights/reportes.html:10
+msgid "Reportes del Sistema"
+msgstr "Reportes del Sistema"
+
+#: templates/flights/reportes.html:18
+msgid "Total Vuelos"
+msgstr "Total Vuelos"
+
+#: templates/flights/reportes.html:25
+msgid "Vuelos Activos"
+msgstr "Vuelos Activos"
+
+#: templates/flights/reportes.html:32
+msgid "Total Pasajeros"
+msgstr "Total Pasajeros"
+
+#: templates/flights/reportes.html:39
+msgid "Total Reservas"
+msgstr "Total Reservas"
+
+#: templates/flights/reportes.html:49
+msgid "Estado de Reservas"
+msgstr "Estado de Reservas"
+
+#: templates/flights/reportes.html:55
+msgid "Confirmadas"
+msgstr "Confirmadas"
+
+#: templates/flights/reportes.html:59
+msgid "Canceladas"
+msgstr "Canceladas"
+
+#: templates/flights/reportes.html:68
+msgid "Tasa de Ocupación"
+msgstr "Tasa de Ocupación"
+
+#: templates/flights/reportes.html:79
+msgid "Reservas confirmadas del total"
+msgstr "Reservas confirmadas del total"
+
+#: templates/flights/reportes.html:81
+msgid "No hay datos disponibles"
+msgstr "No hay datos disponibles"
+
+#: templates/flights/reportes.html:91
+msgid "Vuelos Más Populares"
+msgstr "Vuelos Más Populares"
+
+#: templates/flights/reportes.html:99
+msgid "Código"
+msgstr "Código"
+
+#: templates/flights/reportes.html:100
+msgid "Ruta"
+msgstr "Ruta"
+
+#: templates/flights/reportes.html:103
+msgid "Acciones"
+msgstr "Acciones"
+
+#: templates/flights/reportes.html:118
+msgid "Ver Pasajeros"
+msgstr "Ver Pasajeros"
+
+#: templates/flights/reportes.html:127
+msgid "No hay datos de vuelos disponibles"
+msgstr "No hay datos de vuelos disponibles"
+
+#: templates/registration/login.html:20
+msgid "Usuario"
+msgstr "Usuario"
+
+#: templates/registration/login.html:26 templates/registration/registro.html:63
+msgid "Contraseña"
+msgstr "Contraseña"
+
+#: templates/registration/login.html:38
+msgid "¿No tienes cuenta?"
+msgstr "¿No tienes cuenta?"
+
+#: templates/registration/login.html:39
+msgid "Regístrate aquí"
+msgstr "Regístrate aquí"
+
+#: templates/registration/registro.html:5
+msgid "Registro"
+msgstr "Registro"
+
+#: templates/registration/registro.html:17
+#: templates/registration/registro.html:127
+msgid "Crear Cuenta"
+msgstr "Crear Cuenta"
+
+#: templates/registration/registro.html:18
+msgid "Únete a nuestra plataforma de vuelos"
+msgstr "Únete a nuestra plataforma de vuelos"
+
+#: templates/registration/registro.html:36
+msgid "Nombre de usuario"
+msgstr "Nombre de usuario"
+
+#: templates/registration/registro.html:44
+msgid "Ingresa tu nombre de usuario"
+msgstr "Ingresa tu nombre de usuario"
+
+#: templates/registration/registro.html:57
+msgid "Solo letras, números y @/./+/-/_. Máximo 150 caracteres."
+msgstr "Solo letras, números y @/./+/-/_. Máximo 150 caracteres."
+
+#: templates/registration/registro.html:70
+msgid "Crea una contraseña segura"
+msgstr "Crea una contraseña segura"
+
+#: templates/registration/registro.html:89
+msgid "Confirmar contraseña"
+msgstr "Confirmar contraseña"
+
+#: templates/registration/registro.html:96
+msgid "Repite tu contraseña"
+msgstr "Repite tu contraseña"
+
+#: templates/registration/registro.html:112
+msgid "Debe coincidir con la contraseña anterior."
+msgstr "Debe coincidir con la contraseña anterior."
+
+#: templates/registration/registro.html:138
+msgid "¿Ya tienes una cuenta?"
+msgstr "¿Ya tienes una cuenta?"
+
+#: templates/registration/registro.html:140
+msgid "Inicia sesión aquí"
+msgstr "Inicia sesión aquí"
