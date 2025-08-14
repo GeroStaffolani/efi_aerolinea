@@ -4,7 +4,7 @@ from .models import Vuelo, Reserva
 
 def airline_context(request):
     return {
-        'airline_name': _('AeroSystem'),
+    'airline_name': _('GroPottFly'),
         'airline_slogan': _('Volamos hacia el futuro'),
         'total_vuelos_hoy': Vuelo.objects.filter(
             fecha_salida__date=timezone.now().date(),

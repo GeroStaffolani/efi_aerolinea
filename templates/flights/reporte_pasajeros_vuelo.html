@@ -20,19 +20,25 @@
                         <tr>
                             <th>{% trans "Nombre" %}</th>
                             <th>{% trans "Documento" %}</th>
-                            <th>{% trans "Email" %}</th>
+                            <th>{% trans "Tipo de Documento" %}</th>
+                            <th>{% trans "Correo electrónico" %}</th>
                             <th>{% trans "Teléfono" %}</th>
                             <th>{% trans "Asiento" %}</th>
+                            <th>{% trans "Tipo de Asiento" %}</th>
+                            <th>{% trans "Precio" %}</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {% for pasajero in pasajeros %}
+                        {% for reserva in pasajeros %}
                             <tr>
-                                <td>{{ pasajero.nombre }}</td>
-                                <td>{{ pasajero.documento }}</td>
-                                <td>{{ pasajero.email }}</td>
-                                <td>{{ pasajero.telefono }}</td>
-                                <td>{{ pasajero.asiento }}</td>
+                                <td>{{ reserva.pasajero.nombre }}</td>
+                                <td>{{ reserva.pasajero.documento }}</td>
+                                <td>{{ reserva.pasajero.get_tipo_documento_display }}</td>
+                                <td>{{ reserva.pasajero.email }}</td>
+                                <td>{{ reserva.pasajero.telefono }}</td>
+                                <td>{{ reserva.asiento.numero }}</td>
+                                <td>{{ reserva.asiento.get_tipo_display }}</td>
+                                <td>${{ reserva.precio }}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

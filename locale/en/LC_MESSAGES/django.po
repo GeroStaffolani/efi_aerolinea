@@ -638,8 +638,8 @@ msgid "Selecciona un asiento para continuar"
 msgstr "Select a seat to continue"
 
 #: templates/flights/home.html:15
-msgid "Descubre el mundo con AeroSystem"
-msgstr "Discover the world with AeroSystem"
+msgid "Descubre el mundo con nosotros"
+msgstr "Discover the world with us"
 
 #: templates/flights/home.html:16
 msgid "Vuelos directos, seguros y cómodos a los mejores destinos."
