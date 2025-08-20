@@ -159,5 +159,23 @@ def crear_datos_ejemplo():
     print("Contraseña: admin123")
     print("\nPuedes acceder al panel de administración en: /admin/")
 
+def actualizar_fechas_vuelos():
+    """Actualiza las fechas de salida y llegada de todos los vuelos entre hoy y fin de año (2025)"""
+    from flights.models import Vuelo
+    from datetime import datetime, timedelta
+    hoy = datetime.now().replace(hour=8, minute=0, second=0, microsecond=0)
+    fin_ano = datetime(datetime.now().year, 12, 31, 20, 0, 0)
+    vuelos = Vuelo.objects.all().order_by('id')
+    total_dias = (fin_ano - hoy).days
+    salto = max(1, total_dias // max(1, vuelos.count()))
+    for i, vuelo in enumerate(vuelos):
+        nueva_salida = hoy + timedelta(days=i*salto)
+        nueva_llegada = nueva_salida + timedelta(hours=2)
+        vuelo.fecha_salida = nueva_salida
+        vuelo.fecha_llegada = nueva_llegada
+        vuelo.save()
+    print(f"✓ Fechas de {vuelos.count()} vuelos actualizadas entre hoy y fin de año")
+
 if __name__ == '__main__':
     crear_datos_ejemplo()
+    actualizar_fechas_vuelos()
