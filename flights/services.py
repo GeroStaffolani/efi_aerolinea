@@ -40,22 +40,21 @@ class ReservaService:
     @transaction.atomic
     def crear_reserva(vuelo, pasajero, asiento):
         """Crea una nueva reserva de forma transaccional"""
+        from rest_framework.exceptions import ValidationError
         # Verificar que el asiento esté disponible
         if Reserva.objects.filter(
             vuelo=vuelo,
             asiento=asiento,
             estado__in=['confirmada', 'pendiente']
         ).exists():
-            raise ValueError(_('El asiento seleccionado ya no está disponible'))
-        
+            raise ValidationError(_('El asiento seleccionado ya no está disponible'))
         # Verificar que el pasajero no tenga ya una reserva para este vuelo
         if Reserva.objects.filter(
             vuelo=vuelo,
             pasajero=pasajero,
             estado__in=['confirmada', 'pendiente']
         ).exists():
-            raise ValueError(_('El pasajero ya tiene una reserva para este vuelo'))
-        
+            raise ValidationError(_('El pasajero ya tiene una reserva para este vuelo'))
         # Crear la reserva
         reserva = Reserva.objects.create(
             vuelo=vuelo,
@@ -63,36 +62,30 @@ class ReservaService:
             asiento=asiento,
             estado='confirmada'
         )
-        
         # Crear el boleto automáticamente
         Boleto.objects.create(reserva=reserva)
-        
         # Actualizar estado del asiento
         asiento.estado = 'ocupado'
         asiento.save()
-        
         return reserva
     
     @staticmethod
     @transaction.atomic
     def cancelar_reserva(reserva):
         """Cancela una reserva existente"""
+        from rest_framework.exceptions import ValidationError
         if reserva.estado == 'cancelada':
-            raise ValueError(_('La reserva ya está cancelada'))
-        
+            raise ValidationError(_('La reserva ya está cancelada'))
         # Actualizar estado de la reserva
         reserva.estado = 'cancelada'
         reserva.save()
-        
         # Liberar el asiento
         reserva.asiento.estado = 'disponible'
         reserva.asiento.save()
-        
         # Cancelar el boleto si existe
         if hasattr(reserva, 'boleto'):
             reserva.boleto.estado = 'cancelado'
             reserva.boleto.save()
-        
         return reserva
     
     @staticmethod

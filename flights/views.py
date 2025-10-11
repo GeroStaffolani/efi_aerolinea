@@ -1,3 +1,71 @@
+from rest_framework import viewsets, status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+from .permissions import IsAdminOrReadOnly, IsOwnerOrAdmin
+from rest_framework.decorators import action
+from .models import Avion, Vuelo, Pasajero, Asiento, Reserva, Boleto
+from .serializers import AvionSerializer, VueloSerializer, PasajeroSerializer, AsientoSerializer, ReservaSerializer, BoletoSerializer
+from .services import VueloService, ReservaService, ReporteService
+
+# ViewSets CRUD básicos para cada modelo
+class AvionViewSet(viewsets.ModelViewSet):
+    queryset = Avion.objects.all()
+    serializer_class = AvionSerializer
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
+
+class VueloViewSet(viewsets.ModelViewSet):
+    queryset = Vuelo.objects.all()
+    serializer_class = VueloSerializer
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
+
+    @action(detail=True, methods=['get'])
+    def asientos_disponibles(self, request, pk=None):
+        vuelo = self.get_object()
+        asientos = VueloService.obtener_asientos_disponibles(vuelo)
+        serializer = AsientoSerializer(asientos, many=True)
+        return Response(serializer.data)
+
+class PasajeroViewSet(viewsets.ModelViewSet):
+    queryset = Pasajero.objects.all()
+    serializer_class = PasajeroSerializer
+    permission_classes = [IsAuthenticated]
+
+class AsientoViewSet(viewsets.ModelViewSet):
+    queryset = Asiento.objects.all()
+    serializer_class = AsientoSerializer
+    permission_classes = [IsAuthenticated, IsAdminOrReadOnly]
+
+class ReservaViewSet(viewsets.ModelViewSet):
+    queryset = Reserva.objects.all()
+    serializer_class = ReservaSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
+
+    def create(self, request, *args, **kwargs):
+        # Usar ReservaService para lógica de negocio
+        data = request.data
+        try:
+            vuelo = Vuelo.objects.get(pk=data['vuelo_id'])
+            pasajero = Pasajero.objects.get(pk=data['pasajero_id'])
+            asiento = Asiento.objects.get(pk=data['asiento_id'])
+            reserva = ReservaService.crear_reserva(vuelo, pasajero, asiento)
+            serializer = self.get_serializer(reserva)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        except Exception as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=True, methods=['post'])
+    def cancelar(self, request, pk=None):
+        reserva = self.get_object()
+        try:
+            ReservaService.cancelar_reserva(reserva)
+            return Response({'detail': 'Reserva cancelada'}, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response({'detail': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+class BoletoViewSet(viewsets.ModelViewSet):
+    queryset = Boleto.objects.all()
+    serializer_class = BoletoSerializer
+    permission_classes = [IsAuthenticated, IsOwnerOrAdmin]
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login, authenticate

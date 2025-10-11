@@ -1,6 +1,16 @@
-from django.urls import path
+from django.urls import path, include
 from django.contrib.auth import views as auth_views
+from rest_framework.routers import DefaultRouter
 from . import views
+
+# DRF router para los endpoints API
+router = DefaultRouter()
+router.register(r'aviones', views.AvionViewSet)
+router.register(r'vuelos', views.VueloViewSet)
+router.register(r'pasajeros', views.PasajeroViewSet)
+router.register(r'asientos', views.AsientoViewSet)
+router.register(r'reservas', views.ReservaViewSet)
+router.register(r'boletos', views.BoletoViewSet)
 
 urlpatterns = [
     # Páginas principales
@@ -27,4 +37,6 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('registro/', views.registro, name='registro'),
+    # Endpoints API REST
+    path('api/', include(router.urls)),
 ]
