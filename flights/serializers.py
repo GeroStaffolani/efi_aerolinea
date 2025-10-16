@@ -27,10 +27,12 @@ class VueloSerializer(serializers.ModelSerializer):
 		fields = '__all__'
 
 class PasajeroSerializer(serializers.ModelSerializer):
-	def validate(self, data):
-		if data['fecha_nacimiento'] >= serializers.DateField().to_internal_value(str(serializers.DateField().to_representation(serializers.DateField().to_internal_value('today')))):
+	def validate_fecha_nacimiento(self, value):
+		from datetime import date
+		if value >= date.today():
 			raise serializers.ValidationError('La fecha de nacimiento debe ser en el pasado.')
-		return data
+		return value
+		
 	class Meta:
 		model = Pasajero
 		fields = '__all__'
