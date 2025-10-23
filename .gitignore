@@ -23,7 +23,7 @@ env/
 
 # Static & media files (if generated or collected)
 staticfiles/
-static/
+# static/
 media/
 
 # Migrations (opcional: puedes eliminarlas si deseas versionarlas)
