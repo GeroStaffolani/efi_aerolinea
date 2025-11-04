@@ -138,7 +138,6 @@ Sistema integral de gestión de aerolínea desarrollado con Django y Django REST
 
 ### 📖 Documentación de API
 - **Swagger UI:** http://127.0.0.1:8000/swagger/
-- **ReDoc:** http://127.0.0.1:8000/redoc/
 
 ## 🏗️ Estructura del Proyecto
 
